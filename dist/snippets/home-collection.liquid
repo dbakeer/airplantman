@@ -1,0 +1,52 @@
+  {% paginate collection.products by 12 %}
+  {% if collection.products.size > 0 %}
+  
+  {% if collection.handle == "all" %}
+  
+    
+    
+      <header id="{{ collection.handle }}" class="section-details clearfix">
+        <h2 class="section-title">{{ collection.title }}</h2>
+      </header>
+      
+      <section class="diagonal-divider clearfix">
+        
+        <ul class="product-grid clearfix"  id="product-grid">
+          {% for product in collection.products %}
+          <li>
+            {% include 'product-grid-item' %}
+          </li>
+          {% endfor %}
+        </ul>
+        <div style="clear:both"></div>
+      </section>
+    
+      
+  
+  {% else %}
+  
+    <header class="section-details clearfix">
+      <h2 class="section-title">{{ collection.title }}</h2>
+    </header>
+    
+    <section class="diagonal-divider clearfix">
+      
+      <ul class="product-grid clearfix" id="product-grid">
+        {% for product in collection.products %}
+        <li>
+          {% include 'product-grid-item' %}
+        </li>
+        {% endfor %}
+      </ul>
+      <div style="clear:both"></div>
+    </section>
+  
+  {% endif %}
+  
+  {% include 'pagination' %}
+  
+  {% else %}    
+  <strong>No products found in this collection.</strong>
+  {% endif %}
+  {% endpaginate %}
+  

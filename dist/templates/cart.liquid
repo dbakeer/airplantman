@@ -1,0 +1,253 @@
+<ol class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  <li>Cart</li>
+</ol>
+
+<div class="collection-title">
+  <h2 class="p0 m0 center">
+    Shopping cart
+  </h2>
+  <p>
+    ({{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }} in cart)
+  </p>
+</div>
+  
+{% if cart.item_count > 0 %}
+
+<form action="/cart" method="post">
+  <ul class="reset shopping-cart">
+    {% for item in cart.items %}
+      <li class="row">
+        <section class="col-xs-6 col-sm-2">
+          <a href="{{ item.url }}">  
+            <img class="responsive" src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}" />
+          </a>
+        </section>
+        <section class="col-xs-6 col-sm-2">
+          <div class="form-group center">
+            <label for="updates_{{ item.id }}">Quantity</label>
+            <input type="number" name="updates[]" id="updates_{{ item.id }}" value="{{ item.quantity }}" />
+          </div>
+        </section>
+
+        <section class="col-xs-12 col-sm-4">
+          <div>
+          <a href="{{ item.url }}">
+          {{ item.title }}
+          {% if item.product.variants.size == 1 %}
+            {% unless item.variant.title contains 'Default' %}
+             - {{ item.variant.title }}
+            {% endunless %}
+          {% endif %}
+          </a>
+          {% comment %}
+          Line Item Properties
+          {% endcomment %}
+          {% if item.properties.size > 0 %}
+          <p>
+            {% for p in item.properties %}
+              {% unless p.last == blank %}
+                {{ p.first }}:
+                {% if p.last contains '/uploads/' %}
+                  <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                {% else %}
+                  {{ p.last }}
+                {% endif %}
+                <br />
+              {% endunless %}
+            {% endfor %}
+          </p>
+          {% endif %}
+          <em class="block">{{ item.vendor }}</em>
+          </div>
+        </section>
+
+        <section class="col-xs-12 col-sm-2">
+          <div>
+          {{ item.line_price | money }}
+          </div>
+        </section>
+
+        <section class="col-xs-2 col-sm-2">
+          <div>
+          <a href="/cart/change?line={{ forloop.index }}&quantity=0">Remove</a>
+          </div>
+        </section>
+      </li>
+    {% endfor %}
+
+  </ul>
+  
+  {% comment %}
+  For the checkout and update buttons to work, they need to use
+  a name attribute set to 'checkout' and 'update', respectively. That's case-sensitive.
+  {% endcomment %}
+
+  <div class="double-border-bottom right m30">
+    <h2>Total: {{ cart.total_price | money }}</h2>
+    <p>Prices do not include shipping rates</p>
+  </div>
+  
+  {% comment %}
+  For the special instructions to be submitted with order,
+  they need to use a name attribute set to 'note'. That's case-sensitive.
+  {% endcomment %}
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-lg-5 m30">
+      <h4 class="m0 m20">Special instructions for seller</h4>
+      <textarea name="note">{{ cart.note }}</textarea>
+    </div>
+
+    <div class="col-xs-12 col-sm-5 col-sm-offset-1 col-lg-6 right">
+      <button type="submit" name="update" class="button clr2">Update</button> 
+      <button type="submit" name="checkout" class="button clr1">Check out</button>  
+      {% comment %}Paypal and Google checkout buttons{% endcomment %}
+      {% if additional_checkout_buttons %}
+      <p class="additional-checkout-buttons">
+        {{ content_for_additional_checkout_buttons }}
+      </p>
+      {% endif %}  
+    </div>
+  </div>
+
+</form>
+
+<div>
+
+  <h2>Get your shipping estimates</h2>
+
+  <div class="row shipping">
+    <form id="form-ship">
+    <section class="col-xs-12 col-sm-3">
+      <label for="country">Country</label>
+      <select id="country" name="address[country]">
+        {% include 'country-option' %}
+      </select>
+    </section>
+
+
+    <section class="col-xs-12 col-sm-3" id="province-wrap">
+      {% raw %}
+      <script id="province-template" type="text/x-handlebars-template">
+        <label for="province">State</label>
+        <select id="province" name="address[province]">
+
+          {{#each provinces}}
+            <option value="{{this}}">{{this}}</option>
+          {{/each}}       
+        </select>
+      </script>
+      {% endraw %}
+    </section>
+    <section class="col-xs-12 col-sm-3">
+      <label for="zip">Zip Code</label>
+      <input type="text" name="address[zip]" id="zip">
+    </section>
+    <section class="col-xs-12 col-sm-3">
+      <button type="submit" class="button clr2">Calculate</button>
+    </section>
+    </form>
+  </div>
+</div>
+
+<div id="rate">
+  Provide relevant information and hit "Calculate"
+</div>
+
+{% raw %}
+<script id="ship-template" type="text/x-handlebars-template">
+  <p class="m0 p0 m15">Shipping options available for {{ location }}</p>
+
+  <ul>
+  {{#each shipping_rates}}
+    <li class="m10">{{name}} at {{money price}}</li>
+  {{/each}}
+  </ul>
+</script>
+{% endraw %}
+
+{% else %}
+
+<div class="center">
+  <h4 class="m25">It appears that your cart is currently empty!</h4>
+  <a href="/collections/all" class="button clr2">Continue shopping</a>
+</div>
+
+{% endif %}
+
+<script>
+;(function() {
+  var apply_province, province, _country, _template;
+
+  _country = $("#country");
+
+  province = $("#province-wrap");
+
+  _template = Handlebars.compile($("#province-template").html());
+  _ship_template = Handlebars.compile($("#ship-template").html());
+
+  apply_province = function() {
+    var context, _provinces;
+    _provinces = $(this).find(":selected").data('provinces');
+    context = {
+      provinces: _provinces
+    };
+    if (_provinces.length > 0) {
+      province.html(_template(context));
+      province.show();
+      
+      $(document).trigger('ultron/select');
+    } else {
+      province.html("");
+      return province.hide();
+    }
+  };
+
+  apply_province.apply(_country);
+
+  _country.change(function() {
+    return apply_province.apply(this);
+  });
+
+  $("#form-ship").submit(function(e) {
+    var zip, country, province;
+
+    zip = $("#zip").val();
+
+    if (zip.length > 0)
+    {
+      var selected_country = $(_country).find(":selected").val(),
+          _provinces = $(_country).find(":selected").data('provinces'),
+          arg = "",
+          location = zip + ", " + selected_country;
+
+      if (_provinces.length > 0)
+      {
+        arg = "shipping_address%5Bzip%5D="+zip+"&shipping_address%5Bcountry%5D="+selected_country.split(" ").join("+")+"&shipping_address%5Bprovince%5D="+$("#province").val().split(" ").join("+");
+
+        location = zip + ", " + $("#province").val() + ", " + selected_country;
+      }
+      else
+        arg = "shipping_address%5Bzip%5D="+zip+"&shipping_address%5Bcountry%5D="+selected_country.split(" ").join("+")+"&shipping_address%5Bprovince%5D=";
+
+      $.ajax({
+        type: 'GET',
+        url: '/cart/shipping_rates.json',
+        data: arg,
+        dataType: 'json'
+      })
+      .done(function(ret) {
+        ret['location'] = location;
+        $("#rate").html(_ship_template(ret));
+      })
+      .error(function(ret) {
+        $("#rate").html("Error: Couldn't get anything for " + zip + ", " + selected_country);
+      });
+    }
+    else
+      $("#rate").html("Error: Zip cannot be empty");
+
+    e.preventDefault();
+  });
+})();
+</script>

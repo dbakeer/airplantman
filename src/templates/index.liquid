@@ -1,0 +1,172 @@
+{% if settings.slideshow %}
+
+<div class="featured">
+  <div class="flexslider featured-flex">
+    <ul class="slides">
+      {% if settings.display-sl1 %}
+      <li>
+        {% if settings.sl1-link.size > 0 %}
+          <a href="{{ settings.sl1-link }}">
+        {% else %}
+          <a href="/collections/all">
+        {% endif %}
+
+          <img src="{{ 'sl1-image.jpg' | asset_url }}" alt="{{ settings.sl1-alt }}" />
+        </a>
+      </li>
+      {% endif %}
+
+      {% if settings.display-sl2 %}
+      <li>
+        {% if settings.sl2-link.size > 0 %}
+          <a href="{{ settings.sl2-link }}">
+        {% else %}
+          <a href="/collections/all">
+        {% endif %}
+
+          <img src="{{ 'sl2-image.jpg' | asset_url }}" alt="{{ settings.sl2-alt }}" />
+        </a>
+      </li>
+      {% endif %}
+
+      {% if settings.display-sl3 %}
+      <li>
+        {% if settings.sl3-link.size > 0 %}
+          <a href="{{ settings.sl3-link }}">
+        {% else %}
+          <a href="/collections/all">
+        {% endif %}
+
+          <img src="{{ 'sl3-image.jpg' | asset_url }}" alt="{{ settings.sl3-alt }}" />
+        </a>
+      </li>
+      {% endif %}
+
+      {% if settings.display-sl4 %}
+      <li>
+        {% if settings.sl4-link.size > 0 %}
+          <a href="{{ settings.sl4-link }}">
+        {% else %}
+          <a href="/collections/all">
+        {% endif %}
+
+          <img src="{{ 'sl4-image.jpg' | asset_url }}" alt="{{ settings.sl4-alt }}" />
+        </a>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+</div>
+
+{% endif %}
+
+{% if settings.frontpage-collection != blank and settings.display-featured-product %}
+
+<div class="content-heading">
+  <h4 class="p0 m0">{% unless settings.fp-coll-heading == blank %} {{settings.fp-coll-heading}} {% else %} {{ collections[settings.frontpage-collection].title }} {% endunless %}</h4>
+  
+  {% unless settings.fp-coll-sub-heading == blank %}
+    <p class="p0 m0">
+      {{settings.fp-coll-sub-heading}}
+    </p>
+  {% endunless %}
+</div>
+
+<ul class="grid">
+  <div class="loader center">{{ 'loading.GIF' | asset_url | img_tag }}</div>
+  {% for product in collections[settings.frontpage-collection].products %}
+    {% include 'pin' %}
+  {% endfor %}
+</ul>
+
+{% endif %}
+
+{% if settings.display-featured-blog %} 
+<div class="content-heading">
+    <h4 class="p0 m0">{% unless settings.fp-blog-heading == blank %} {{settings.fp-blog-heading}} {% else %} From our blog {% endunless %}</h4>
+    
+    {% unless settings.fp-blog-sub-heading == blank %}
+  <p class="p0 m0">
+        {{ settings.fp-blog-sub-heading }}
+  </p>
+    {% endunless %}
+</div>
+
+{% if blogs.[settings.featured-blog].articles.size > 0 %}
+<div class="latest">
+  <div class="row">
+    {% for article in blogs.[settings.featured-blog].articles limit: 3 %}
+    <div class="col-xs-12 col-sm-4">
+      <section>
+        {{ article.excerpt_or_content }}
+      </section>
+      <h4>{{ article.title }}</h4>
+      <span>{{ article.published_at | date: "%B. %d. %Y" }}</span>
+      <a href="{{ article.url }}" class="button clr3">Read more &rarr;</a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% else %}
+  <p>The blog does not have any content</p>
+{% endif %}
+{% endif %}
+
+<div class="row">
+  {% if settings.display-welcome-message %}
+  <div class="col-xs-12 {% if settings.display-timeline %}col-sm-6{% endif %}">
+    <div class="content-heading">
+      <h4 class="p0 m0">{{ settings.welcome-title }}</h4>
+    </div>
+
+    {{ settings.welcome-content }}
+  </div>
+
+  <div class="hidden-xs col-sm-5 col-sm-offset-1">
+  {% else %}
+    <div class="hidden-xs col-sm-5">
+  {% endif %}
+  {% if settings.display-timeline %}
+    <div class="content-heading">
+      <h4 class="p0 m0">Tweets</h4>
+    </div>
+	
+      
+    <div class="intrinsic-wrap">
+      {% unless settings.twitter-username == blank %}
+        {% assign twitter-username = settings.twitter-username %}
+      {% else %}
+        {% assign twitter-username = "shopify" %}
+      {% endunless %}
+
+      <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/{{ twitter-username }}" data-screen-name="{{ twitter-username }}" data-widget-id="408124053057048576" data-chrome="noborder noheader nofooter transparent">Tweets by @{{ twitter-username }}</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </div>
+      
+    {% endif %}
+
+  </div>
+</div>
+
+<script>
+  ;(function() {
+    if ($.browser.mobile)
+    {
+      var flex = $('.featured-flex').flexslider({
+        prevText: "",
+        nextText: "",  
+        directionNav: false,
+        animation: "slide"
+      });
+    }
+    else
+    {
+    var flex = $('.featured-flex').flexslider({
+        prevText: "",
+        nextText: "",  
+        directionNav: true,
+      	slideshow: true
+      });
+    }
+  })();
+</script>

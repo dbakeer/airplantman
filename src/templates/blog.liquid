@@ -1,0 +1,97 @@
+{% paginate blog.articles by 8 %}
+
+<ol class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  <li><a href="{{blog.url}}">{{ blog.title }}</a></li>
+  
+  {% unless paginate.pages == 0 %}      
+    <li class="active">Page {{ paginate.current_page }} of {{ paginate.pages }}</li>
+  {% endunless %}
+</ol>
+
+<div class="collection-title">
+  <h2 class="p0 m0 center">
+    {% if current_tags %}
+      {{ blog.title | link_to: blog.url }} &raquo; {{ current_tags.first }}
+    {% else %}
+      {{ blog.title }}
+    {% endif %}
+  </h2>
+</div>
+
+<ul class="reset blog-list">
+
+  {% for article in blog.articles %}
+  <li class="blog-article{% if forloop.first %} first{% endif %}{% if forloop.last %} last{% endif %}">
+    <h2 class="blog-article-title">
+      <a href="{{ article.url }}">{{ article.title }}</a>
+    </h2>
+    <div class="rte">
+      {% if article.excerpt.size > 0 %}
+        {{ article.excerpt }}
+      {% else %}
+        <p>{{ article.content | strip_html | truncatewords: 100 }}</p>
+      {% endif %}
+    </div>
+    
+    <a class="read-more button clr3" href="{{ article.url }}">Read more →</a>
+
+    <section class="center">
+  
+    <div class="author">
+      {% if article.user.email.size > 0 %}
+      <div class="avatar-wrap">
+        {% if article.user.homepage.size > 0 %}<a href="{{ article.user.homepage }}">{% endif %}
+          <img class="avatar" src="//www.gravatar.com/avatar/{{ article.user.email | remove: ' ' | strip_newlines | downcase | md5 }}" />
+        {% if article.user.homepage.size > 0 %}</a>{% endif %}
+      </div>
+      {% endif %}
+      <div>By {{ article.user.name }}</div>
+    </div>
+      
+    <div class="article-meta">
+      <time pubdate datetime="{{ article.published_at | date: '%Y-%m-%d' }}"><h3 class="m0 p0">{{ article.published_at | date: '%b %d, %Y' }}</h3></time>
+      
+      {% if blog.comments_enabled? %}
+      <a href="{{ article.url }}#comments"><span class="icon-dot"></span>{{ article.comments_count }} {{ article.comments_count | pluralize: 'comment','comments' }}</a>
+      {% endif %}
+    </div>
+      
+      <div class="share">
+      <div class="share-wrap">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-text="Read {{ article.title | escape }} from {{ shop.name | escape }}">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>      
+      </div>
+      <div class="share-wrap">
+        <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+      <div style="display: inline-block;" class="fb-like" data-href="{{ shop.url }}{{ article.url }}" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div>
+      </div>
+      <div class="share-wrap">
+      <div class="g-plusone" data-size="tall" data-annotation="none"></div>
+
+<!-- Place this tag after the last +1 button tag. -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/platform.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+      </div>
+
+    </section>
+  </li>
+  {% endfor %}
+
+</ul>
+
+{% include 'pagination' %}
+
+{% endpaginate %}

@@ -1,0 +1,75 @@
+{% if search.performed %}
+
+{% paginate search.results by 10 %}
+
+<ol class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  <li class="active">Search</li>
+  
+  {% unless paginate.pages == 0 %}      
+    <li class="active">Page {{ paginate.current_page }} of {{ paginate.pages }}</li>
+  {% endunless %}
+</ol>
+
+<div class="collection-title">
+  <h2 class="m0 p0">
+    {{search.results_count}} {{ search.results_count | pluralize: 'item', 'items' }} found for "{{search.terms}}"
+  </h2>
+</div>
+
+{% unless search.results_count > 0 %}
+	{% assign product_count = 0 %}
+  <p class="center">Sorry, we could not find anything for "{{ search.terms }}"</p> 
+{% else %}
+  <ul class="grid">
+    <div class="loader center">{{ 'loading.GIF' | asset_url | img_tag }}</div>
+    {% for product in search.results %}
+    	{% if product.price %}
+   	  	{% include 'pin' %}
+   	  	{% assign product_count = product_count | plus: 1 %}
+   	  {% else %} 
+				{% assign not_products = true %}
+   	  {% endif %}
+    {% endfor %}
+  </ul>
+{% endunless %}
+
+{% if not_products %}
+	
+	{% if product_count > 0 %}
+		<hr>
+	{% endif %}
+	<ul class="reset search-list">
+	{% for item in search.results %}
+  	{% unless item.price %}
+			<li class="m20">
+				<strong class="block"><a href="{{ item.url }}">{{ item.title }}</a></strong>
+				<span>{{ item.content | strip_html | truncatewords: 40 | highlight: search.terms }}</span>  
+			</li>
+ 	  {% endunless %}
+  {% endfor %}
+  </ul>
+{% endif %}
+
+{% include 'pagination' %}
+
+{% endpaginate %}
+
+{% else %}
+
+<ol class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  <li class="active">Search</li>
+</ol>
+
+<div class="collection-title">
+  <h2 class="m0 p0">
+    Search
+  </h2>
+</div>
+
+<div class="center">
+  <h4>You didn't search for anything</h4>
+</div>
+
+{% endif %}

@@ -1,0 +1,76 @@
+<header class="row">
+  <section class="logo col-xs-12 col-sm-6 col-lg-8">
+    <a href="{{shop.url}}">
+    {% if settings.use_logo %}
+      <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" class="m0 p0" style="max-width: 100%; height: auto;" />
+    {% else %}
+    <h1 class="p0 m0">{{shop.name}}</h1>
+    {% endif %}
+    </a>
+  </section>
+
+  <div class="col-xs-12 col-sm-6 col-lg-4">
+    <div class="search-box right">
+      <div class="search">
+        <form action="/search" method="get" id="search-form">
+          <input type="text" name="q" value="{{ search.terms | escape }}" placeholder="Find">
+          <span class="icon-search fs20 find"></span>
+        </form>
+      </div>
+      <a href="#shopping-cart" class="icon-cart fs15">
+        <span class="item item-count">{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+{% assign tagline = false %}
+<nav class="hidden-xs menu">
+  <ul class="reset li-inline">
+    {% for link in linklists[settings.main_linklist].links %}
+      <li>
+        <h4>
+          {% assign words = link.title | split: '/' %}
+          <a {% unless linklists[link.handle] == empty %} href="#" data-toggle="x{{ words.first | split: ' ' | join: '-' }}/show" {% else %} href="{{ link.url }}" {% endunless %}>
+            {% unless linklists[link.handle] == empty %}+ {% endunless %}
+            {{ words.first }}
+              {% unless words.first == words.last %}
+                  <span>{{ words.last }}</span>
+                  {% assign tagline = true %}
+              {% endunless %}
+            </a>
+        </h4>
+      </li>
+    {% endfor %}
+
+    {% if shop.customer_accounts_enabled %}
+      <li>
+        {% if customer %}
+          <h4><a href="/account">
+            Account
+            {% if tagline %}<span>Hi, {{ customer.first_name }}</span>{% endif %}
+          </a></h4>
+        {% else %}
+          <h4><a href="/account/login">
+            Login
+            {% if tagline %}<span>Or create account</span>{% endif %}
+          </a></h4>
+        {% endif %}
+      </li>
+    {% endif %}
+  </ul>
+</nav>
+
+{% for link in linklists[settings.main_linklist].links %}
+  {% assign words = link.title | split: '/' %}
+  {% unless linklists[link.handle] == empty %}
+    <div class="sub-nav hidden-xs x{{ words.first | split: ' ' | join: '-' }}">
+      <span class="close" data-toggle="x{{ words.first | split: ' ' | join: '-' }}/show">Close</span>
+      <ul class="reset">
+        {% for link in linklists[link.handle].links %}
+          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endunless %}
+{% endfor %}

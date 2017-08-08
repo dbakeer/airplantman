@@ -1,0 +1,99 @@
+{% paginate collection.products by settings.pagination_limit %}
+
+
+<!-- <ol class="breadcrumb">
+  <li><a href="/">Home</a></li> -->
+  <div class="text-center">
+      <h1><a href="{{ collection.url }}">{{ collection.title }}</a></h1>
+  </div>
+
+  <!-- {% unless paginate.pages == 0 %}
+    <li class="active">Page {{ paginate.current_page }} of {{ paginate.pages }}</li>
+  {% endunless %}
+</ol> -->
+
+<div class="collection-title">
+  <!-- <h2 class="m0 p0">
+    {{ collection.title }}
+  </h2> -->
+
+  {% if collection.description.size > 0 %}
+  <p class="desc">
+    {{ collection.description }}
+  </p>
+  {% endif %}
+
+  {% if collection.all_tags.size > 0 and settings.filter %}
+  <div class="filter">
+    <div class="title">
+      {% if current_tags.size > 0 %}
+      {% assign options = current_tags | join:' ' | split:' ' %}
+        {% for tag in options %}
+      {% if collection.all_tags contains tag %}
+          {{ tag | capitalize }}
+      {% endif %}
+        {% endfor %}
+      {% else %}
+        Filter
+      {% endif %}
+      <span class="icon-arrow-down arrow"></span>
+    </div>
+
+    <ul class="reset">
+      <li><a href="/collections/{{ collection.handle }}">All</a></li>
+      {% assign options = settings.filter_options | split:',' %}
+      {% for tag in options %}
+      {% if collection.all_tags contains tag %}
+      {% if current_tags contains tag %}
+      {% continue %}
+      {% else %}
+        <li>{{ tag | capitalize | link_to_tag: tag }}</li>
+      {% endif %}
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+</div>
+<div id="free-shipping">
+   <div class="policy ">
+      <div class="policy-icon">
+          <i class="icon icon-dolar-circle"></i>
+      </div>
+      <div class="policy-text">
+
+           <div id="on-ord-txt">
+             <span class="fa-stack fa-lg">
+                <i class="fa fa-circle-o fa-stack-2x"></i>
+                <i class="fa fa-usd fa-stack-1x"></i>
+            </span><br>
+             FREE SHIPPING<br>
+             <span id="on-order">ON ORDERS OVER $150 with discount code 'holidayshipping'</span></div>
+      </div>
+   </div>
+</div>
+{% unless collection.all_products_count > 0 %}
+  <p class="center">Sorry, there are no products in this collection.</p>
+{% else %}
+  <ul class="grid">
+    <div class="loader center">{{ 'loading.GIF' | asset_url | img_tag }}</div>
+
+    {% for product in collection.products %}
+    	{% include 'pin' %}
+    {% endfor %}
+
+  </ul>
+{% endunless %}
+
+{% include 'pagination' %}
+
+{% endpaginate %}
+
+<script>
+  $(document).ready(function() {
+    $(".filter").click(function() {
+      $(this).children('ul').slideToggle("fast");
+      $(this).children(".title").children(".arrow").toggleClass("rotate");
+    });
+  });
+</script>

@@ -1,0 +1,587 @@
+<ol class="breadcrumb">
+  <li><a href="{{ shop.url }}">Home</a></li>
+  {% if collection %}
+    <li><a href="{{ collection.url }}">{{ collection.title }}</a></li>
+  {% else %}
+    <li><a href="/collections/all" title="All Products">Products</a></li>
+  {% endif %}
+  <li class="active">{{ product.title }}</li>
+</ol>
+
+<div class="product row">
+
+  <div class="product-image col-xs-12 col-sm-5">
+    <div class="product-flex">
+      <div class="owl-carousel product-flexslider" id="product-flex">
+        {% for image in product.images %}
+          <div data-thumb="{{ image | product_img_url: 'master' }}">
+            <a href="{{ image | product_img_url: 'master' }}">
+            <img class="cloudzoom" data-owl='{{forloop.index | minus: 1}}' src="{{ image | product_img_url: 'large' }}" alt="{{ image.alt | escape }}" itemprop="image" data-cloudzoom="zoomImage:'{{ image | product_img_url: 'master'}}', zoomPosition:'inside',zoomInsideClass:'inside-image'">
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+
+      
+      
+      <div class="jcarousel-wrapper">
+      <div class="jcarousel">
+        <ul id="thumbs" class="{% if product.images.size < 2 %}hidden{% endif %}">
+          {% for image in product.images %}
+          
+          <li >
+            <a>
+              <img data-flex="{{ forloop.index | minus:1}}" src="{{ image | product_img_url: 'medium' }}" alt="{{ image.alt | escape }}" />
+            </a>
+          </li>
+          
+          {% endfor %}
+        </ul>
+      </div>
+      <a href="#" class="jcarousel-control-prev">&lsaquo;</a>
+      <a href="#" class="jcarousel-control-next">&rsaquo;</a>
+
+                
+      </div>
+    </div>
+  </div>
+  <div class="product-desc col-xs-12 col-sm-6 col-sm-offset-1">
+    <div class="type">({{ product.type | capitalize }})</div>
+    <h2>
+      {{ product.title | capitalize }}
+    </h2>
+
+    <div class="price" id="product-price">
+      {% assign variant = product.selected_or_first_available_variant %} 
+        <h1 class="price" id="price-preview">
+          {{ variant.price | money }}
+          {% if variant.price < variant.compare_at_price %} 
+          <span class="old-price">{{ variant.compare_at_price | money }}</span>
+          {% endif %}
+        </h1>
+    </div>
+    
+    <script>
+      flex = $(document).find("#product-flex");
+      flex.owlCarousel({
+        singleItem: true,
+        /*autoPlay: true,*/
+        autoHeight: true,
+        slideSpeed:350,
+        transitionStyle : "fade",
+        addClassActive : true
+        
+      });
+      
+      $("[data-flex]").click(function() {
+        
+        flex.trigger('owl.goTo', $(this).data("flex"));
+      });
+      
+      window.pflex = flex;
+      
+      
+    </script>
+    
+    {% if product.available %}
+    <form action="/cart/add" id="product-form" method="post" enctype="multipart/form-data">
+    {% if product.variants.size > 1 %}
+      <div class="loader center">{{ 'loading.GIF' | asset_url | img_tag }}</div>
+      <div id="product-variants">  
+        
+        <select id="product-select" name="id[]" data-no-pseudo="true"  style="display:none;">  
+          {% for variant in product.variants %}    
+          <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} value="{{ variant.id }}">
+            {{ variant.title }} - {{ variant.price | money }}</option>  
+          {% endfor %} 
+        </select>
+        
+        
+        
+      </div>
+    
+      
+      <script>
+         $(window).load(function() {
+    
+          var get_id = '';
+          var trig = false;
+           // <![CDATA[  
+          var selectCallback = function(variant, selector) {
+            
+            if (variant) {
+              $('.qty-mn').show();
+              if (variant.available) {
+                $(".add").removeClass("hidden");
+                $(".soldout").addClass("hidden");
+                $('#add-mn').removeClass('disabled').prop('disabled', false).text('Add to Cart').fadeTo(200,1);                
+              } else {
+                //$(".add").addClass("hidden");
+                //$(".soldout").removeClass("hidden");
+				$('.qty-modal').hide();
+				$('.price-modal').empty();
+				$('#add-modal-btn').text('Unavailable').addClass('disabled').prop('disabled', true).fadeTo(200,0.5);
+              }
+              // Whether the variant is in stock or not, we can update the price and compare at price.
+              if ( variant.compare_at_price > variant.price ) {
+                $('#product-price').html('<h1>'+ Shopify.formatMoney(variant.price, "{{shop.money_format}}") +'<span class="old-price">'+Shopify.formatMoney(variant.compare_at_price, "{{shop.money_format}}")+ '</span></h1>');
+              } else {
+                $('#product-price').html('<h1>'+ Shopify.formatMoney(variant.price, "{{shop.money_format}}") + '</h1>' );
+              }        
+            }
+            else {
+              $('.qty-mn').hide();
+              $('#product-price').empty();
+              $('#add-mn').text('Unavailable').addClass('disabled').prop('disabled', true).fadeTo(200,0.5);
+            }
+            
+            if (!trig)
+            {
+              trig = true;
+              $(document).trigger('ultron/select');
+            }
+            
+            if (variant && variant.featured_image) {                
+              var original_image = $(".f-hidden img"), new_image = variant.featured_image; 
+              var index = new_image.position - 1;
+              Shopify.Image.switchImage(new_image, original_image[0], function (new_image_src, original_image, element) {
+                
+                //var v_img = $("#product-flex").find('img[src$="'+new_image_src.replace(/(http:|https:)/, '')+'"]').data('owl');
+               
+                pflex.trigger('owl.goTo', index);
+              });    
+            }
+          }
+                 
+          
+          // initialize multi selector for product
+          jQuery(function($) {
+            new Shopify.OptionSelectors("product-select", { product: {{ product | json }}, onVariantSelected: selectCallback , enableHistoryState: true});
+            addColorSelectorBars();
+          });
+            
+          function addColorSelectorBars() {
+  
+              $("#product-variants .form-group label").each(function() {
+                //alert('function calling');
+                if ( $(this).html().toLowerCase() === "color" ) {
+
+                  var $label = $(this);
+                  //alert($label);
+                  $label.addClass("color-selector").wrapInner("<div class='label'>");
+                  $("#" + $label.attr("for")).hide().find("option").each(function(i) {
+                    $label.append("<div class='color-box " + $(this).attr("value").replace(/ /g, "-").toLowerCase()  + "' id='" + $(this).attr("value").replace(/ /g, "-").toLowerCase() + "'><span>&#x2713;</span></div>");
+                  });
+                  $label.children(".label").css('width',($('.form-group').find('.color-box').length)*37);
+                  $('.form-group').find('.color-box').each(function(index, element) {
+                        var val = $(this).parent().siblings().val().replace(/ /g, "-").toLowerCase();
+                        //alert(val);
+                        //console.log(val);
+                        if($(this).hasClass(val))
+                            $(this).addClass('selected');
+                    });
+
+                  $label.mouseleave(function() {
+                    //$(this).removeClass('current-color-box');
+                    $label.children(".label").html("Color - " + $label.children(".color-box.selected").attr("id").replace(/-/g, " ").toProperCase());
+
+                    //$("#product-variants #thumbs img[alt=" + $label.children(".color-box.selected").attr("id") + "]").closest("a").click();
+                  });
+
+                  $label.children(".label").html("Color - " + $(".color-box").first().attr("id").replace(/-/g, " ").toProperCase());
+
+
+                  $label.children(".color-box").mouseenter(
+                    function() {
+                      //$(this).addClass('current-color-box');
+                      $(this).siblings(".label").html("Color - " + $(this).attr("id").replace(/-/g, " ").toProperCase()).css('display','block');
+                      //$("#product-variants #thumbs img[alt=" + $(this).attr("id") + "]").closest("a").click();
+                    }
+                  );
+
+                  $('.color-box').each(function(index, element) {
+                        $(this).mouseenter(function(e) {
+                            $(this).addClass('current-color-box');
+                            $(this).siblings().removeClass('current-color-box');
+                            var get_id = $(this).attr('id').replace(/-/g, " ").toProperCase();
+                            //alert(get_id);
+                            $("#" + $(this).closest("label").attr("for")).val( $(this).attr("id").replace(/-/g, " ").toProperCase() ).val(get_id).change();
+                            //var v_img = $("#product-flex").find('img[src$="'+new_image_src.replace(/(http:|https:)/, '')+'"]').data('owl');
+
+                            //pflex.trigger('owl.goTo', v_img);
+                          });
+
+                          $(this).mouseleave(function(e) {
+
+                                var get_id = $('.color-box.selected').attr('id').replace(/-/g, " ").toProperCase();
+                                $("#" + $(this).closest("label").attr("for")).val( $(this).attr("id").replace(/-/g, " ").toProperCase() ).val(get_id).change();	
+
+                          });
+                   });
+
+                  $('.form-group .color-selector').mouseleave(function(e) {
+                    $(this).children('.color-box').removeClass('current-color-box');
+                    //$(this).children('.selected').addClass('current-color-box');
+                    $(this).children('.label').css('display','none');
+
+                    });
+
+                  $label.children(".color-box").on("click touchstart", function() {
+                    $(this).addClass("selected").siblings().removeClass("selected");
+                    $("#" + $(this).closest("label").attr("for")).val( $(this).attr("id").replace(/-/g, " ").toProperCase() ).change();
+                  });
+				  
+				  var size = $('.color-box').size();
+				  var get_width = $('.color-box').outerWidth(true);
+				  $label.css('width',(get_width*size)+'px');
+                }
+              });
+				
+            
+            
+			}
+          // ]]>
+            
+          $("#product-variants .form-group label").each(function(index, element) {
+   
+              if($(this).html() == "Stand")
+              {
+                  $(this).parent().css('display','none');
+                  var data = '<div class="form-group">';
+                  get_id = $(this).siblings('select').attr('id');
+                  //console.log(get_id);
+				  var selected_val = $(this).siblings('select').val();
+				  $('#'+get_id+' option').each(function(index, element) {
+					//console.log(element);
+					var val = $(this).val();
+					var checked ='';
+					if(val != 'No'){
+						if(val == selected_val)
+						checked = 'checked';
+                    	data += '<input type="checkbox" class="stand-checkbox" value="'+val+'" '+checked+'><span class="stand_value">'+val+'</span><br/>';
+					}
+					
+                });
+				data += '</div>';
+				$(this).parent().parent().append(data);
+                 
+              }
+           
+        
+        /*$(this).mouseenter(function(e) {
+			//alert(pflex);
+            pflex.trigger('owl.stop');
+        });
+		$(this).mouseleave(function(e) {
+            pflex.trigger('owl.play',2000);	
+        });*/
+    });
+
+			  
+			  $(".stand-checkbox").change(function() {
+					if(this.checked) {
+                    $('#'+get_id).val($(this).val()).change();
+					}
+					else
+					{
+						$('#'+get_id).val('No').change();		
+					}
+				});
+         
+        });
+      </script>
+    {% else %}
+      <input type="hidden" name="id[]" value="{{ product.variants.first.id }}" />
+    {% endif %}
+
+      <div class="add">
+
+      <div class="form-group row qty-mn">
+        <div class="col-xs-12">
+          <label for="quantity">Qty</label>
+          <input min="1" type="number" class="qty" id="quantity" name="quantity" value="1" />
+        </div>
+      </div>
+        <!-- 		##################################### -->
+
+        {% if product.tags contains 'addons' %}
+
+        <div id="accessories">
+
+        <h3>Add Ons</h3>
+
+        
+
+        {% for product in collections.add-ons.products %}
+
+        {% for variant in product.variants %}
+
+          <div><input type="checkbox" name="id[]" value="{{ variant.id }}" /> <b>{{ product.title }}  +{{ product.price | money }} </b></div>
+        <p>{{ product.description}}</p>
+
+        {% endfor %}
+
+        {% endfor %}
+          
+        
+
+        
+
+        </div>
+
+        {% endif %}
+        {% if product.tags contains 'legs' %}
+        {% for product in collections.legs.products %}
+
+        {% for variant in product.variants %}
+
+          <div><input type="checkbox" name="id[]" value="{{ variant.id }}" /> <b>{{ product.title }}  +{{ product.price | money }} </b></div>
+        <p>{{ product.description}}</p>
+
+        {% endfor %}
+
+        {% endfor %}
+        {% endif %}
+        
+        
+        <!-- 		##################################### -->
+
+      <div class="form-group">
+        <button class="button clr2" id="add-mn">Add to Cart</button>
+        <a class="cart_checkout" href="/checkout">Proceed to checkout &rarr;</a>
+      </div>
+
+      </div>
+
+      <div class="form-group soldout hidden">
+        <p>Sold Out</p>
+      </div>
+    </form>
+    {% else %}
+      <h3>OUT OF STOCK</h3>
+    {% endif %}
+    
+
+    <div class="p-desc">
+      {{ product.content }}
+    </div>
+
+    <div class="email">
+      Need help ? <span class="icon-mail"></span> <a href="mailto:{{settings.contact-email}}">Contact us</a>
+    </div>
+
+    <div class="share">
+      <div class="share-wrap">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-text="Check out {{ product.title | escape }} from {{ shop.name | escape }}">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>      
+      </div>
+      <div class="share-wrap">
+        <a href="//pinterest.com/pin/create/button/?url={{ shop.url }}{{ product.url }}&amp;media={{ product.featured_image | product_img_url: 'grande' }}&amp;description={{ product.title | escape }} from {{ shop.name | escape }}" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a>
+      <script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>
+      </div>
+      <div class="share-wrap">
+        <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+      <div style="display: inline-block;" class="fb-like" data-href="{{ shop.url }}{{ product.url }}" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div>
+      </div>
+      <div class="share-wrap">
+        <!-- Place this tag where you want the +1 button to render. -->
+<div class="g-plusone" data-size="tall" data-annotation="none"></div>
+
+<!-- Place this tag after the last +1 button tag. -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/platform.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+      </div>
+
+      <!-- end of share -->
+    </div>
+    
+    {% if settings.show_tags and product.tags.size > 0 %}
+    <div class="tags">
+      <ul class="reset li-inline">
+        {% for tag in product.tags %}
+          <li>{{ tag }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% if settings.show_related_products %}
+
+<div class="content-heading">
+  <h4 class="p0 m0">Related</h4>
+  <p class="m0 p0">
+    You may also like these products
+  </p>
+</div>
+
+<!-- FEATURED PRODUCTS (GRID) -->
+
+<ul class="grid">
+  <div class="loader center">{{ 'loading.GIF' | asset_url | img_tag }}</div>
+  {% if collection and collection.all_products_count > 1 %}
+    {% assign col = collection.handle %}
+  {% else %}
+    {% if product.collections.last.handle %}
+      {% assign col = product.collections.last.handle %}
+    {% else %}
+      {% assign col = collections['all'].handle %}
+    {% endif %}
+  {% endif %}
+
+  {% for product in collections[col].products limit: 4 %}
+    {% include 'pin' %}
+  {% endfor %}
+</ul>
+
+{% endif %}
+
+<div class="full-screen">
+  <button class="close-owl icon-cross"></button>
+  <div id="full-flex">
+    <button class="owl-prev-display icon-arrow-left"></button>
+    <div id="display" class="own-carousel">
+      {% for image in product.images %}
+        <div class="item">
+          <div><img src="{{ image | product_img_url: 'original' }}" alt="{{ image.alt | escape }}"></div>
+        </div>
+      {% endfor %}
+    </div>    
+    <button class="owl-next-display icon-arrow-right"></button>
+  </div>
+
+  <div class="full-control">
+    <span>{{product.title}}</span>
+    <button class="owl-prev icon-arrow-left"></button>
+    <div id="tray" class="owl-carousel">
+      {% for image in product.images %}
+      <div><img src="{{ image | product_img_url: 'medium' }}" alt="{{ image.alt | escape }}" data-transition="{{forloop.index | minus: 1}}"></div>
+      {% endfor %}
+    </div>
+    <button class="owl-next icon-uniE600"></button>
+  </div>
+</div>
+
+<script>
+{% if settings.enable-slideshow %}
+  ;(function() {
+    $("#full-flex").css({
+      height: "" + ($(window).height() - 150) + "px"
+    });
+
+    $(document).ready(function() {
+      var hide_slideshow, i, owl, owl_visible, show_slideshow, tray, _elm, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2, _slideshow;
+
+      tray = $("#tray");
+
+      owl = $("#display");
+
+      _slideshow = $(".full-screen");
+
+      owl_visible = false;
+
+      show_slideshow = function() {
+        if ($(window).width() < 500) {
+          return console.log('less');
+        } else {
+          _slideshow.fadeIn();
+          return owl_visible = true;
+        }
+      };
+
+      hide_slideshow = function() {
+        _slideshow.fadeOut();
+        return owl_visible = false;
+      };
+
+      $(document).on('ultron/hide-slideshow', function() { hide_slideshow(); });
+
+      tray.owlCarousel({
+        rewindSpeed: 1800,
+      });
+
+      var _thumbs;
+      _thumbs = $('[data-transition]');
+      $(_thumbs[0]).addClass("selected");
+
+      owl.owlCarousel({
+        singleItem: true,
+        slideSpeed: 400,
+        rewindSpeed: 2000,
+        afterMove : function()
+        {
+          _thumbs.removeClass("selected");
+          $(_thumbs[owl.data("owlCarousel").currentItem]).addClass("selected");
+        }
+      });
+
+      $(".owl-prev, .owl-prev-display").click(function() {
+        owl.trigger('owl.prev');
+        tray.trigger('owl.prev');
+      });
+
+      $(".owl-next, .owl-next-display").click(function() {
+        owl.trigger('owl.next');
+        tray.trigger('owl.next');
+      });
+
+      _slide = function(arg)
+      {
+        var slide;
+        slide = $(this).data(arg);
+        owl.trigger('owl.goTo', slide);
+        tray.trigger('owl.goTo', slide);
+      }
+
+      $("[data-owl]").click(function() {
+        _slide.apply(this, ["owl"]);
+
+        show_slideshow();
+      });
+
+      $("[data-transition]").click(function() {
+        _slide.apply(this, ["transition"]);
+      });
+
+      $('.close-owl').click(function() {
+        return hide_slideshow();
+      });
+
+      $(window).resize(function() {
+        $("#full-flex").css({
+          height: "" + ($(window).height() - 150) + "px"
+        });
+        if ($(window).width() < 500 && owl_visible) {
+          return hide_slideshow();
+        }
+      });
+
+    });
+  })();
+
+{% endif %}
+
+/*$(window).load(function(){
+	$('.owl-item').hover(function(){
+		//pflex.trigger('owl.stop');
+		
+		//alert($(this).find('img').hasClass('cloudzoom'));
+		$(this).find('img').bind('cloudzoom_end_zoom()',function(){alert('Cloud Zoom is end')});
+		//alert("in");
+		//alert($(this).find('div').data('thumb');
+	},function(){});
+});*/
+</script>

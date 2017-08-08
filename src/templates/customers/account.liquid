@@ -1,0 +1,56 @@
+<ol class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  <li>Logged in as {{ customer.first_name }} / <a href="/account">Account</a> / <a href="/account/addresses">Addresses</a> / <a href="/account/logout">Logout</a></li>
+</ol>
+
+<div class="collection-title">
+  <h2 class="p0 m0 center">
+    Account
+  </h2>
+</div>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-3">
+    <h3>{{ customer.name }}</h3>
+    <span class="block m20"><a href="mailto:{{ customer.email }}">{{ customer.email }}</a></span>
+
+    {% if customer.default_address != nil %}
+      <div class="address-wrap m20">
+        <span class="block">{{ customer.default_address.street }}</span>
+        <span class="block">
+          {{ customer.default_address.city }}{% if customer.default_address.province.size > 0 %}, {{ customer.default_address.province }}{% endif %}</span>
+        <span class="block">{{ customer.default_address.country }}{% if customer.default_address.zip.size > 0 %}, {{ customer.default_address.zip }}{% endif %}</span>
+      </div>
+    {% endif %}
+
+    <a class="view-addresses" href="/account/addresses">View addresses ({{ customer.addresses_count }})</a>
+  </div>
+
+  <div class="col-xs-12 col-sm-9 orders">
+    {% if customer.orders.size > 0 %}
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="first">Order</th>
+            <th>Payment</th>
+            <th>Fulfillment</th>
+            <th class="last">Total</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        {% for order in customer.orders %}
+          <tr class="{% if order.cancelled %}error{% endif %}">
+            <td class="order-number first">{{ order.name | link_to: order.customer_url }} <span class="date">- {{ order.created_at | date: "%b %d, %Y" }}</span></td>
+            <td class="payment-status {{ order.financial_status }}">{{ order.financial_status | capitalize }}</td>
+            <td class="fulfillment-status {{ order.fulfillment_status }}">{{ order.fulfillment_status | capitalize }}</td>
+            <td class="total last">{{ order.total_price | money }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="empty">You haven't placed any orders yet.</p>
+    {% endif %}
+  </div>
+</div>

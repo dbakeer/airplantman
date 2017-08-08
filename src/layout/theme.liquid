@@ -1,0 +1,201 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="ie9 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8" />
+  <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1' />
+<style>
+	#thumbs img{ height:80px; }
+</style>
+	<![endif]-->
+
+  <title>
+  {{ page_title }}{% if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif %}{% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+  </title>
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description }}" />
+  {% endif %}
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  {{ content_for_header }}
+
+  <meta property="og:site_name" content="{{ shop.name }}" />
+  <meta name="author" content="{{ shop.name }}">
+
+  {% if template contains 'product' %}
+    <meta property="og:type" content="product" />
+    <meta property="og:title" content="{{ product.title | strip_html | escape }}" />
+    {% for image in product.images %}
+    <meta property="og:image" content="http:{{ image.src | product_img_url: 'grande' }}" />
+    <meta property="og:image:secure_url" content="https:{{ image.src | product_img_url: 'grande' }}" />
+    {% endfor %}
+    <meta property="og:price:amount" content="{{ product.price | money_without_currency }}" />
+    <meta property="og:price:currency" content="{{ shop.currency }}" />
+  {% elsif template contains 'article' %}
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{ article.title | strip_html | escape }}" />
+    {% assign img_tag = '<' | append: 'img' %}
+    {% if article.content contains img_tag %}
+      {% assign src = article.content | split: 'src="' %}
+      {% assign src = src[1] | split: '"' | first | remove: 'https:' | remove: 'http:' %}
+      {% if src %}
+        <meta property="og:image" content="http:{{ src }}" />
+        <meta property="og:image:secure_url" content="https:{{ src }}" />
+      {% endif %}
+    {% endif %}
+  {% else %}
+    {% if settings.use_logo %}
+      <meta property="og:image" content="http:{{ 'logo.png' | asset_url }}" />
+      <meta property="og:image:secure_url" content="https:{{ 'logo.png' | asset_url }}" />
+    {% endif %}
+    <meta property="og:title" content="{{ page_title | escape }}" />
+    <meta property="og:type" content="website" />
+  {% endif %}
+
+  {% if page_description %}
+  <meta property="og:description" content="{{ page_description }}" />
+  {% endif %}
+  <meta property="og:url" content="{{ canonical_url }}" />
+  <meta property="og:site_name" content="{{ shop.name }}" />
+  <meta name="google-site-verification" content="ZNPW4kuw3zm1Tqah_lx3EAkAeXBY7PCCwZcE2DgmTJw" />
+
+  <link rel="shortcut icon" type="image/x-icon" href="{{ 'favicon.png' | asset_url }}">
+
+
+
+  <link href='//fonts.googleapis.com/css?family={{settings.heading-font}}:300,400,500,600' rel='stylesheet' type='text/css'>
+
+
+  {{ 'icomoon.css' | asset_url | stylesheet_tag }}
+  {{ 'bootstrap.scss.css' | asset_url | stylesheet_tag }}
+  {{ 'jquery.mmenu.all.css' | asset_url | stylesheet_tag }}
+  {{ 'airplantman.css' | asset_url | stylesheet_tag }}
+  {{ 'altron.scss.css' | asset_url | stylesheet_tag }}
+  {{ 'colors.css' | asset_url | stylesheet_tag }}
+
+
+  <!--[if lt IE 9]>
+  {{ '//html5shiv.googlecode.com/svn/trunk/html5.js' | script_tag }}
+  <![endif]-->
+
+  <!--[if lt IE 8]>
+  {{ 'json2.js' | shopify_asset_url | script_tag }}
+  <![endif]-->
+
+  <!-- {{ 'option_selection.js' | shopify_asset_url | script_tag }} -->
+
+  {{ '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js' | script_tag }}
+  {{ '//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js' | script_tag}}
+  {{ 'altron-vendors.js' | asset_url | script_tag }}
+
+
+  {{ 'altron.js' | asset_url | script_tag }}
+
+  {{ 'owl.carousel.min.js' | asset_url | script_tag }}
+  {{ 'owl.carousel.css' | asset_url | stylesheet_tag }}
+  {{ 'owl.transitions.css' | asset_url | stylesheet_tag }}
+
+
+  {{ 'jcarousel.min.js' | asset_url | script_tag }}
+  {{ 'jcarousel.js' | asset_url | script_tag }}
+  {{ 'jcarousel.css' | asset_url | stylesheet_tag }}
+
+
+    {{ 'cloud-zoom.js' | asset_url | script_tag }}
+
+
+
+
+  {{ 'option_selection.js' | shopify_asset_url | script_tag }}
+
+</head>
+
+<body>
+
+<div class="notification">
+  <p class="m0 p0"></p>
+</div>
+
+{% include 'product-modal' %}
+
+  <nav role='navigation' id="nav-menu" style="opacity: 0; visibility: hidden;">
+  <div>
+    <ul class="list">
+      {% for link in linklists[settings.main_linklist].links %}
+        <li>
+          {% assign words = link.title | split: '/' %}
+          <a href="{{ link.url }}">{{ words.first }}</a>
+          {% unless linklists[link.handle] == empty %}
+            <ul>
+              {% for link in linklists[link.handle].links %}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {% endfor %}
+            </ul>
+          {% endunless %}
+        </li>
+      {% endfor %}
+      {% if shop.customer_accounts_enabled %}
+        <li>
+          {% if customer %}
+            <a href="/account">Account</a>
+          {% else %}
+            <a href="/account/login">Login</a>
+          {% endif %}
+        </li>
+      {% endif %}
+    </ul>
+
+    <div class="icon-social">
+      {% if settings.twitter-url.size > 0 %}<a href="{{ settings.twitter-url }}" class="icon-twitter"></a>{% endif %}
+      {% if settings.facebook-url.size > 0 %}<a href="{{ settings.facebook-url }}" class="icon-facebook"></a>{% endif %}
+      {% if settings.pinterest-url.size > 0 %}<a href="{{ settings.pinterest-url }}" class="icon-pinterest"></a>{% endif %}
+      {% if settings.googleplus-url.size > 0 %}<a href="{{ settings.googleplus-url }}" class="icon-googleplus"></a>{% endif %}
+      {% if settings.instagram-url.size > 0 %}<a href="{{ settings.instagram-url }}" class="icon-instagram"></a>{% endif %}
+      {% if settings.youtube-url.size > 0 %}<a href="{{ settings.youtube-url }}" class="icon-youtube"></a>{% endif %}
+      {% if settings.vimeo-url.size > 0 %}<a href="{{ settings.vimeo-url }}" class="icon-vimeo"></a>{% endif %}
+      {% if settings.tumblr-url.size > 0 %}<a href="{{ settings.tumblr-url }}" class="icon-tumblr"></a>{% endif %}
+    </div>
+  </div>
+</nav>
+
+<!-- SHOPPING CART -->
+{% include 'shopping-cart' %}
+
+
+<!-- mmenu -->
+<div>
+
+  {% if settings.display-promo %}
+  <div class="promo">
+    <div class="container">
+      {{ settings.promo-content }}
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="container">
+
+  <div class="visible-xs top row">
+    <div class="nav-menu col-xs-6">
+        <a href="#nav-menu">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </a>
+    </div>
+    <div class="col-xs-6 right"><a href="#shopping-cart"><span class="icon-cart fs15"></span> Cart (<span class="item-count">{{ cart.item_count }}</span>)</a></div>
+  </div>
+
+  {% section 'header' %}
+
+  {{ content_for_layout }}
+
+  {% section 'footer' %}
+
+</body>
+</html>

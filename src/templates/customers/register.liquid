@@ -1,0 +1,46 @@
+<ol class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  <li>Create account</li>
+</ol>
+
+<div class="collection-title">
+  <h2 class="p0 m0 center">
+    Create a new account
+  </h2>
+</div>
+
+<div class="customer-template mid">
+  <div id="customer">
+    <!-- Create Customer -->
+    <div id="create-customer">
+
+      {% form 'create_customer' %}
+        {{ form.errors | default_errors }}
+
+        <div id="first_name" class="form-group">
+          <label for="first_name" class="login">First Name</label>
+          <input type="text" value="" name="customer[first_name]" id="first_name" class="large" size="30" />
+        </div>
+
+        <div id="last_name" class="form-group">
+          <label for="last_name" class="login">Last Name</label>
+          <input type="text" value="" name="customer[last_name]" id="last_name" class="large" size="30" />
+        </div>
+
+        <div id="email" class="form-group">
+          <label for="email" class="login">Email Address</label>
+          <input type="email" value="" name="customer[email]" id="email" class="large" size="30" />
+        </div>
+
+        <div id="password" class="form-group m25">
+          <label for="password" class="login">Password</label>
+          <input type="password" value="" name="customer[password]" id="password" class="large password" size="30" />
+        </div>
+
+        <div class="form-group or">
+          <button type="submit" class="button clr2">Create</button> or <a href="/account/login">Login</a>
+        </div>
+      {% endform %}
+    </div><!-- /#create-customer -->
+  </div>
+</div>

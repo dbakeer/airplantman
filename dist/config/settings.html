@@ -1,0 +1,554 @@
+<div class="section-info">
+  <h3>Altron v 2.0</h3>
+  <p><a href="http://altron-3.myshopify.com/pages/documentation">Documentation</a> - <a href="http://www.abhayarawal.com/altron-support">Support</a></p>
+<p>If you need any assistance, please contact me at <a href="mailto:abhayarawal@outlook.com">abhayarawal@outlook.com</a></p>
+</div>
+ <br />
+<fieldset>
+  <legend>General</legend>
+      
+  <h3>Logo Options</h3>
+  <table>
+    <tr>
+      <td><label for="use_logo">Use Custom Logo?</label></td>
+      <td><input type="checkbox" id="use_logo" name="use_logo" checked="false" /></td>
+    </tr>
+    <tr>
+      <td><label for="logo_image">Custom Logo</label></td>
+      <td><input type="file" name="logo.png" id="logo_image" data-max-width="400" data-max-height="300" /></td>
+    </tr>
+    <tr>
+      <td colspan="2"><small>Maximum logo dimensions are 400px wide by 300px high.</small></td>
+    </tr>
+    <tr>
+      <td><label for="favicon">Favicon</label></td>
+      <td><input type="file" name="favicon.png" id="favicon" /></td>
+    </tr>
+    <tr>
+      <td colspan="2"><small>32px X 32px maximum</small></td>
+    </tr>
+    <tr>
+      <th><label for="main_linklist">Main Menu Link List</label></th>
+      <td><select name="main_linklist" class="linklist" /></td>
+    </tr>
+  </table>
+
+  <br />
+
+  <h3>Promo bar options</h3>
+
+  <table>
+    <tr>
+      <td><label for="display-promo">Display promo bar?</label></td>
+      <td><input type="checkbox" name="display-promo" id="display-promo" /></td>
+    </tr>
+    <tr>
+      <td><label for="promo-bg-color">Background color</label></td>
+      <td><input name="promo-bg-color" class="color" type="text" value="#F15656" /></td>
+    </tr>
+    <tr>
+      <td><label for="promo-color">Text color</label></td>
+      <td><input name="promo-color" class="color" type="text" value="#FFFFFF" /></td>
+    </tr>
+    <tr>
+      <td><label for="promo-content">Promo text</label></td>
+      <td><input type="text" name="promo-content" id="promo-content" /></td>
+    </tr>
+  </table>
+
+  <br />
+
+  <h3>Font options</h3>
+  <table>
+    <tr>
+        <td><label for="heading-font">Heading font</label></td>
+        <td>
+            <select name="heading-font">
+              <option value="Arial+Narrow" selected="true">Arial Narrow</option>
+              <option value="Dosis">Dosis</option>
+              <option value="Roboto+Condensed">Roboto Condensed</option>
+              <option value="Exo+2">Exo 2</option>
+              <option value="Quantico">Quantico</option>
+              <option value="PT+Sans+Narrow">PT Sans Narrow</option>
+              <option value="Advent+Pro">Advent Pro</option>
+            </select>
+        </td>
+      </tr>
+      <tr>
+      <td><label for="body-font">Body font</label></td>
+      <td>
+          <select name="body-font">
+            <optgroup label="Sans-serif">
+              	<option value="Arial+Narrow" selected="true">Arial Narrow</option>
+              
+                <option value="Lato">Lato</option>
+                <option value="Exo+2">Exo 2</option>
+                <option value="Open+Sans">Open Sans</option>
+                <option value="Source+Sans+Pro">Source Sans Pro</option>
+                <option value="Raleway">Raleway</option>
+                <option value='Droid+Sans'>Droid Sans</option>
+                <option value="Cabin">Cabin</option>
+                <option value="Roboto">Roboto</option>
+            </optgroup>
+            <optgroup label="Serif">
+                <option value="PT+Serif">PT Serif</option>
+                <option value="Lora">Lora</option>
+                <option value='Merriweather'>Merriweather</option>
+                <option value='Droid+Serif'>Droid Serif</option>
+            </optgroup>
+            <optgroup label="Monospace">
+                <option value="Droid+Sans+Mono">Droid Sans Mono</option>
+                <option value="PT+Mono">PT Mono</option>
+            </optgroup>
+            <optgroup label="Slab">
+                <option value="Arvo">Arvo</option>
+            </optgroup>
+          </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="font-size">Font Size</label></td>
+      <td><input type="text" name="font-size" id="font-size" value="13" />px</td>
+    </tr>
+  </table>
+
+  <br />
+
+  <h3>Color options</h3>
+  <table>
+    <tr>
+      <td><label for="background-color">Background color</label></td>
+      <td><input name="background-color" class="color" type="text" value="#ffffff" /></td>
+    </tr>
+    <tr>
+      <td><label for="base-color">Base color</label></td>
+      <td><input name="base-color" class="color" type="text" value="#747474" /></td>
+    </tr>
+    <tr>
+      <td><label for="heading-color">Heading color</label></td>
+      <td><input name="heading-color" class="color" type="text" value="#525252" /></td>
+    </tr>
+    <tr>
+      <td><label for="border-color">Border color</label></td>
+      <td><input name="border-color" class="color" type="text" value="#dbd9d4" /></td>
+    </tr>
+    <tr>
+      <td><label for="a-color">Link color</label></td>
+      <td><input name="a-color" class="color" type="text" value="#999999" /></td>
+    </tr>
+    <tr>
+      <td><label for="a-hover-color">Link hover color</label></td>
+      <td><input name="a-hover-color" class="color" type="text" value="#5BB0FD" /></td>
+    </tr>
+    <tr>
+      <td><label for="dsk-a-color">Desktop nav link color</label></td>
+      <td><input name="dsk-a-color" class="color" type="text" value="#999999" /></td>
+    </tr>
+    <tr>
+      <td><label for="dsk-a-hover-bg">Desktop nav link hover background</label></td>
+      <td><input name="dsk-a-hover-bg" class="color" type="text" value="#f7f7f7" /></td>
+    </tr>
+    <tr>
+      <td><label for="nav-bg">Mobile nav background</label></td>
+      <td><input name="nav-bg" class="color" type="text" value="#292929" /></td>
+    </tr>
+    <tr>
+      <td><label for="nav-a-color">Mobile nav a color</label></td>
+      <td><input name="nav-a-color" class="color" type="text" value="#d2d2d2" /></td>
+    </tr>
+    <tr>
+      <td><label for="nav-border-color">Mobile nav border color</label></td>
+      <td><input name="nav-border-color" class="color" type="text" value="#444444" /></td>
+    </tr>
+    <tr>
+      <td><label for="form-elm-background">Form elements background</label></td>
+      <td><input name="form-elm-background" class="color" type="text" value="#ebebeb" /></td>
+    </tr>
+    <tr>
+      <td><label for="form-elm-color">Form elements color</label></td>
+      <td><input name="form-elm-color" class="color" type="text" value="#6D6B6B" /></td>
+    </tr>
+    <tr>
+      <td><label for="form-elm-focus">Form elements focus background</label></td>
+      <td><input name="form-elm-focus" class="color" type="text" value="#f2f2f2" /></td>
+    </tr>
+    <tr>
+      <td><label for="btn-clr2">Primary button background</label></td>
+      <td><input name="btn-clr2" class="color" type="text" value="#ff7e7e" /></td>
+    </tr>
+    <tr>
+      <td><label for="btn-clr2-color">Primary button color</label></td>
+      <td><input name="btn-clr2-color" class="color" type="text" value="#ffffff" /></td>
+    </tr>
+    <tr>
+      <td><label for="btn-clr1">Secondary button background</label></td>
+      <td><input name="btn-clr1" class="color" type="text" value="#2fdab8" /></td>
+    </tr>
+    <tr>
+      <td><label for="btn-clr1-color">Secondary button color</label></td>
+      <td><input name="btn-clr1-color" class="color" type="text" value="#ffffff" /></td>
+    </tr>
+    <tr>
+      <td><label for="btn-clr3">Optional button border</label></td>
+      <td><input name="btn-clr3" class="color" type="text" value="#ccc" /></td>
+    </tr>
+    <tr>
+      <td><label for="btn-clr3-color">Optional button color</label></td>
+      <td><input name="btn-clr3-color" class="color" type="text" value="#a19f9f" /></td>
+    </tr>
+  </table>
+  
+</fieldset>
+<fieldset>
+  <legend>Homepage</legend>
+  <table>
+    <tr>
+      <td><label for="slideshow">Show slideshow</label></td>
+      <td><input type="checkbox" name="slideshow" id="slideshow" checked="true" /></td>
+    </tr>
+    <tr>
+      <td><label for="autoplay-slideshow">Autoplay slideshow</label></td>
+      <td><input type="checkbox" name="autoplay-slideshow" checked="true" /></td>
+    </tr>
+    <tr>
+      <td><label for="frequency">Slideshow frequency (seconds)</label></td>
+      <td><input type="text" name="frequency" /></td>
+    </tr>
+  </table>
+
+  <br />
+
+  <small>Please use consistent image size across the slider for best results</small>
+  
+  <br />
+  <br />
+
+  <h4>Slide 1</h4>
+
+  <table class="standard-table">
+    <tr>
+      <td><label for="display-sl1">Display</label></td>
+      <td><input type="checkbox" name="display-sl1" id="display-sl1" /></td>
+    </tr>
+    <tr>
+      <td><label for="sl1-image">Slide image</label></td>
+      <td><input type="file" name="sl1-image.jpg" id="sl1-image" /></td>
+    </tr>
+    <tr>
+      <td><label for="sl1-alt">Image alt</label></td>
+      <td><input type="text" name="sl1-alt" id="sl1-alt" /></td>
+    </tr>
+    <tr>
+      <td><label for="sl1-link">Link URL</label></td>
+      <td><input type="text" name="sl1-link" id="sl1-link" /></td>
+    </tr>
+  </table>
+
+  <br />
+
+  <h4>Slide 2</h4>
+
+  <table class="standard-table">
+    <tr>
+      <td><label for="display-sl2">Display</label></td>
+      <td><input type="checkbox" name="display-sl2" id="display-sl2" /></td>
+    </tr>
+    <tr>
+      <td><label for="sl2-image">Slide image</label></td>
+      <td><input type="file" name="sl2-image.jpg" id="sl2-image" /></td>
+    </tr>
+    <tr>
+      <td><label for="sl2-alt">Image alt</label></td>
+      <td><input type="text" name="sl2-alt" id="sl2-alt" /></td>
+    </tr>
+    <tr>
+      <td><label for="sl2-link">Link URL</label></td>
+      <td><input type="text" name="sl2-link" id="sl2-link" /></td>
+    </tr>
+  </table>
+
+  <br />
+
+  <h4>Slide 3</h4>
+
+  <table class="standard-table">
+    <tr>
+      <td><label for="display-sl3">Display</label></td>
+      <td><input type="checkbox" name="display-sl3" id="display-sl3" /></td>
+    </tr>
+    <tr>
+      <td><label for="sl3-image">Slide image</label></td>
+      <td><input type="file" name="sl3-image.jpg" id="sl3-image" /></td>
+    </tr>
+    <tr>
+      <td><label for="sl3-alt">Image alt</label></td>
+      <td><input type="text" name="sl3-alt" id="sl3-alt" /></td>
+    </tr>
+    <tr>
+      <td><label for="sl3-link">Link URL</label></td>
+      <td><input type="text" name="sl3-link" id="sl3-link" /></td>
+    </tr>
+  </table>
+
+  <br />
+
+  <h4>Slide 4</h4>
+
+  <table class="standard-table">
+    <tr>
+      <td><label for="display-sl4">Display</label></td>
+      <td><input type="checkbox" name="display-sl4" id="display-sl4" /></td>
+    </tr>
+    <tr>
+      <td><label for="sl4-image">Slide image</label></td>
+      <td><input type="file" name="sl4-image.jpg" id="sl4-image" /></td>
+    </tr>
+    <tr>
+      <td><label for="sl4-alt">Image alt</label></td>
+      <td><input type="text" name="sl4-alt" id="sl4-alt" /></td>
+    </tr>
+    <tr>
+      <td><label for="sl4-link">Link URL</label></td>
+      <td><input type="text" name="sl4-link" id="sl4-link" /></td>
+    </tr>
+  </table>
+
+  <br />
+    
+  <h3>Welcome message</h3>
+  <table>
+    <tr>
+      <td><label for="display-welcome-message">Display welcome message?</label></td>
+      <td><input type="checkbox" name="display-welcome-message" checked="true" /></td>
+    </tr>
+    <tr>
+      <td><label for="welcome-title">Message title</label></td>
+      <td><input type="text" name="welcome-title" /></td>
+    </tr>
+    <tr>
+      <td><label for="welcome-content">Message content (HTML)</label></td>
+      <td>
+        <textarea name="welcome-content"></textarea>
+      </td>
+    </tr>
+  </table>
+  
+  <br />
+    
+  <h3>Featured Products</h3>
+  <table>
+    <tr>
+      <td><label for="display-featured-product">Display featured products?</label></td>
+      <td><input type="checkbox" name="display-featured-product" checked="true" /></td>
+    </tr>
+    <tr>
+      <th><label for="frontpage-collection">Featured Product Collection</label></th>
+      <td><select name="frontpage-collection" class="collection" /></td>
+    </tr>
+    <tr>
+      <th><label for="fp-coll-heading">Featured Collection Heading</label></th>
+      <td><input type="text" id="fp-coll-heading" name="fp-coll-heading" value="Featured" /></td>
+    </tr>
+    <tr>
+      <th><label for="fp-coll-sub-heading">Featured Collection Sub Heading</label></th>
+      <td><input type="text" id="fp-coll-sub-heading" name="fp-coll-sub-heading" value="Our picks and the best sellers" /></td>
+    </tr>
+  </table>
+  
+  <br />
+  
+  <h3>Featured blog</h3>
+  <table>
+    <tr>
+      <td><label for="display-featured-blog">Display featured blog?</label></td>
+      <td><input type="checkbox" name="display-featured-blog" checked="true" /></td>
+    </tr>
+    <tr>
+      <th><label for="fp-blog-heading">Featured Blog Heading</label></th>
+      <td><input type="text" id="fp-blog-heading" name="fp-blog-heading" value="From our blog" /></td>
+    </tr>
+    <tr>
+      <th><label for="fp-blog-sub-heading">Featured Blog Sub Heading</label></th>
+      <td><input type="text" id="fp-blog-sub-heading" name="fp-blog-sub-heading" value="Read more of our latest news and events" /></td>
+    </tr>
+    <tr>
+      <td><label for="featured-blog">Select a blog</label></td>
+      <td><select class="blog" name="featured-blog" /></td>
+    </tr>
+  </table>
+
+  <br />
+
+  <table>
+    <tr>
+      <td><label for="display-timeline">Display Twitter Timeline?</label></td>
+      <td><input type="checkbox" name="display-timeline" id="display-timeline" checked="true" /></td>
+    </tr>
+    <tr>
+      <td><label for="twitter-username">Twitter timeline username</label></td>
+      <td><input type="text" name="twitter-username" id="twitter-username" /></td>
+    </tr>
+  </table>
+  
+</fieldset>
+<fieldset>
+  <legend>Collection Page</legend>
+  <table>
+    <tr>
+      <th><label for="pagination_limit">Products Per Page</label></th>
+      <td>
+        <select name="pagination_limit" id="pagination_limit">
+          <option value="12">12</option>
+          <option value="24">24</option>
+          <option value="36">36</option>
+          <option value="48">48</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="filter">Show tag filter?</label></td>
+      <td><input type="checkbox" name="filter" id="filter" checked="true" /></td>
+    </tr>
+    <tr>
+      <td><label for="filter_options">Filter Options(seperated with ',')</label></td>
+      <td><input type="text" name="filter_options" id="filter" class="long" /></td>
+    </tr>
+  </table>
+  
+</fieldset>
+<fieldset>
+  <legend>Product Page</legend>
+  <table>
+    <tr>
+      <th><label for="variant_message">Variant message</label></th>
+      <td><input type="text" name="variant_message" id="variant_message" /></td>
+    </tr>
+    <tr>
+      <td><label for="show_tags">Show product tags?</label></td>
+	  <td><input type="checkbox" name="show_tags" id="show_tags" /></td>
+    </tr>
+    <tr>
+      <td><label for="twist_scale">Enable twist and scale in product card?</label></td>
+	  <td><input type="checkbox" name="twist_scale" id="twist_scale" checked="true" /></td>
+    </tr>
+    <tr>
+      <td><label for="show_related_products">Show related products?</label></td>
+      <td><input type="checkbox" id="show_related_products" name="show_related_products" checked="true" /></td>
+    </tr>
+    <tr>
+      <td><label for="contact-email">Contact email</label></td>
+      <td><input type="text" name="contact-email" id="contact-email" value="john.doe@outlook.com" /></td>
+    </tr>
+    <tr>
+      <td><label for="enable-slideshow">Enable slideshow</label></td>
+      <td><input type="checkbox" name="enable-slideshow" id="enable-slideshow" checked="true" /></td>
+    </tr>
+  </table>
+  
+</fieldset>
+
+<fieldset>
+  <legend>Footer</legend>
+  <table>
+    <tr>
+      <td><label for="footer-list-title">Footer Link List Title</label></td>
+      <td><input type="text" name="footer-list-title" value="Quick Links" /></td>
+    </tr>
+    <tr>
+      <th><label for="footer-linklist">Footer Link List</label></th>
+      <td><select name="footer-linklist" class="linklist" /></td>
+    </tr>
+  </table>
+
+  <br />
+
+  <h3>Newsletter</h3>
+  <table>
+    <tr>
+      <td><label for="enable-newsletter">Enable newsletter</label></td>
+      <td><input type="checkbox" name="enable-newsletter" id="enable-newsletter" checked="true" /></td>
+    </tr>
+    <tr>
+      <td><label for="mailchimp-url">Mailchimp URL</label></td>
+      <td><input type="text" name="mailchimp-url" id="mailchimp-url" /></td>
+    </tr>
+  </table>
+
+  <br />
+
+  <h3>Social Links</h3>
+  <table>
+    <tr>
+        <td><label>Twitter URL</label></td>
+        <td><input type="text" name="twitter-url" /></td>
+    </tr>
+    <tr>
+        <td><label>Facebook URL</label></td>
+        <td><input type="text" name="facebook-url" /></td>
+    </tr>
+    <tr>
+        <td><label>Pinterest URL</label></td>
+        <td><input type="text" name="pinterest-url" /></td>
+    </tr>
+    <tr>
+        <td><label>Google Plus URL</label></td>
+        <td><input type="text" name="googleplus-url" /></td>
+    </tr>
+    <tr>
+        <td><label>Instagram URL</label></td>
+        <td><input type="text" name="instagram-url" /></td>
+    </tr>
+    <tr>
+        <td><label>YouTube URL</label></td>
+        <td><input type="text" name="youtube-url" /></td>
+    </tr>
+    <tr>
+        <td><label>Vimeo URL</label></td>
+        <td><input type="text" name="vimeo-url" /></td>
+    </tr>
+    <tr>
+        <td><label>Tumblr URL</label></td>
+        <td><input type="text" name="tumblr-url" /></td>
+    </tr>
+  </table>
+
+  <br />
+
+  <h3>Payment</h3>
+
+  <table>
+    <tr>
+      <td><label for="amex">American Express</label></td>
+      <td><input type="checkbox" name="amex" id="amex" /></td>
+    </tr>
+    <tr>
+      <td><label for="cirrus">Cirrus</label></td>
+      <td><input type="checkbox" name="cirrus" id="cirrus" /></td>
+    </tr>
+    <tr>
+      <td><label for="discover">Discover</label></td>
+      <td><input type="checkbox" name="discover" id="discover" /></td>
+    </tr>
+    <tr>
+      <td><label for="google-wallet">Google Wallet</label></td>
+      <td><input type="checkbox" name="google-wallet" id="google-wallet" /></td>
+    </tr>
+    <tr>
+      <td><label for="maestro">Maestro</label></td>
+      <td><input type="checkbox" name="maestro" id="maestro" /></td>
+    </tr>
+    <tr>
+      <td><label for="mastercard">Mastercard</label></td>
+      <td><input type="checkbox" name="mastercard" id="mastercard" /></td>
+    </tr>
+    <tr>
+      <td><label for="paypal">Paypal</label></td>
+      <td><input type="checkbox" name="paypal" id="paypal" /></td>
+    </tr>
+    <tr>
+      <td><label for="visa">Visa</label></td>
+      <td><input type="checkbox" name="visa" id="visa" /></td>
+    </tr>
+  </table>
+  
+</fieldset>

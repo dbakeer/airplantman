@@ -1,0 +1,54 @@
+<ol class="breadcrumb">
+  <li><a href="#">Home</a></li>
+  <li class="active">All Collections</li>
+</ol>
+
+<div class="collection-title">
+  <h2 class="m0 p0">
+    All Collections
+  </h2>
+
+  <div class="filter">
+    <div class="title">+ Browse <span class="icon-arrow-down arrow"></span></div>
+
+    <ul class="reset">
+      {% for collection in collections %}
+        {% unless collection.handle == 'frontpage' %}
+          <li><a href="{{ collection.url }}">{{ collection.title }}</a></li>
+        {% endunless %}
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+<ul class="grid">
+  <div class="loader center">{{ 'loading.GIF' | asset_url | img_tag }}</div>
+  {% for collection in collections %}
+    {% unless collection.handle == 'frontpage' %}
+      <li class="pin">
+        <div class="product-wrap">
+          <a href="{{ collection.url }}" class="res-wrap">
+            {% if collection.image %}
+              <img src="{{ collection.image.src | collection_img_url: 'large' }}" alt="{{ collection.image.alt}}">
+            {% else %}
+              {{ collection.products.first.featured_image | product_img_url: 'large' | img_tag: collection_title }}
+            {% endif %}
+          </a>
+        </div>
+
+        <div class="meta">
+          <h4>{{ collection.title }}</h4>
+        </div>
+      </li>
+    {% endunless %}
+  {% endfor %}
+</ul>
+
+<script>
+  $(document).ready(function() {
+    $(".filter").click(function() {
+      $(this).children('ul').slideToggle("fast");
+      $(this).children(".title").children(".arrow").toggleClass("rotate");
+    });
+  });
+</script>

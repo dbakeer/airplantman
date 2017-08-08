@@ -1,0 +1,86 @@
+<footer>
+    <div class="row">
+      <div class="col-xs-12 col-sm-4 col-md-3">
+        <ul>
+          {% for link in linklists[settings.footer-linklist].links %}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="col-xs-12 col-sm-4 col-md-3">
+        <h4>Follow Us</h4>
+
+        <div class="icon-social">
+          {% if settings.twitter-url.size > 0 %}<a href="{{ settings.twitter-url }}" class="twitter"><img src="{{ 'twitter-small.png' | asset_url }}" alt="Twitter" /></a>{% endif %}
+          {% if settings.facebook-url.size > 0 %}<a href="{{ settings.facebook-url }}" class="facebook"><img src="{{ 'facebook-small.png' | asset_url }}" alt="Twitter" /></a>{% endif %}
+          {% if settings.pinterest-url.size > 0 %}<a href="{{ settings.pinterest-url }}" class="pinterest"><img src="{{ 'pinterest-small.png' | asset_url }}" alt="Twitter" /></a>{% endif %}
+          {% if settings.googleplus-url.size > 0 %}<a href="{{ settings.googleplus-url }}" class="googleplus"><img src="{{ 'googleplus-small.png' | asset_url }}" alt="Twitter" /></a>{% endif %}
+          {% if settings.instagram-url.size > 0 %}<a href="{{ settings.instagram-url }}" class="instagram"><img src="{{ 'insta-small.png' | asset_url }}" alt="Twitter" /></a>{% endif %}
+          {% if settings.youtube-url.size > 0 %}<a href="{{ settings.youtube-url }}" class="youtube"><img src="{{ 'youtube-small.png' | asset_url }}" alt="Twitter" /></a>{% endif %}
+          {% if settings.vimeo-url.size > 0 %}<a href="{{ settings.vimeo-url }}" class="vimeo"><img src="{{ 'vimeo-small.png' | asset_url }}" alt="Twitter" /></a>{% endif %}
+          {% if settings.tumblr-url.size > 0 %}<a href="{{ settings.tumblr-url }}" class="tumblr"><img src="{{ 'tumblr-small.png' | asset_url }}" alt="Twitter" /></a>{% endif %}
+        </div>
+      </div>
+
+      {% if settings.enable-newsletter %}
+      <div class="col-xs-12 col-sm-4 col-md-4 row">
+        <h4>Newsletter</h4>
+
+        <form action="{{ settings.mailchimp-url }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate newsletter-form" target="_blank" novalidate>
+          <input type="email" value="" name="EMAIL" placeholder="Enter your email">
+          <button type="submit" id="sign_up" name="subscribe" class="button clr2">Subscribe</button>
+        </form>
+      </div>
+
+      <div class="col-xs-12 col-sm-12 col-md-2">
+
+      {% else %}
+        <div class="col-xs-12 col-sm-4 col-md-6">
+      {% endif %}
+
+        <h4>Back to top</h4>
+        <a href="" class="scrollup icon-arrow-up2 fs30"></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+      <div class="container">
+  <div class="end-footer row">
+    {% comment %}
+    <div class="col-lg-6 hidden-xs hidden-sm">
+      (Shortcuts) M &rarr; Menu / C &rarr; Cart / Esc &rarr; Close everything
+    </div>
+    {% endcomment %}
+    <div class="col-sm-12 col-lg-6 col-xs-12 end">
+      Website by <a href="http://planetx.in"  target="_blank">Planetx Technologies</a> | © {{ 'now' | date: "%Y" }} {{ shop.name }}
+    </div>
+  </div>
+
+  <div class="payment">
+    {% if settings.amex %} <span class='payment-icon amex'></span> {% endif %}
+    {% if settings.cirrus %} <span class='payment-icon cirrus'></span> {% endif %}
+    {% if settings.discover %} <span class='payment-icon discover'></span> {% endif %}
+    {% if settings.google-wallet %} <span class='payment-icon google-wallet'></span> {% endif %}
+    {% if settings.maestro %} <span class='payment-icon maestro'></span> {% endif %}
+    {% if settings.mastercard %} <span class='payment-icon mastercard'></span> {% endif %}
+    {% if settings.paypal %} <span class='payment-icon paypal'></span> {% endif %}
+    {% if settings.visa %} <span class='payment-icon visa'></span> {% endif %}
+  </div>
+
+  </div>
+
+</div>
+  </div>
+
+   <div class="f-hidden">
+      <img />
+    </div>
+<script> window.m_format = "{{shop.money_format}}"; </script>
+
+{% assign templates = "index collection list-collections product search" | split : ' ' %}
+{% for _template in templates %}
+  {% if template contains _template %}
+  {{ 'grid.altron.js' | asset_url | script_tag }}
+  {% endif %}
+{% endfor %}

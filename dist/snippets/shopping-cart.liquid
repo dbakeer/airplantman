@@ -1,0 +1,75 @@
+<section id="shopping-cart" style="opacity: 0; visibility: hidden;">
+  <div>
+    <section class="cart-wrap">
+    <h2>
+      Shopping cart
+      <span>({{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }} in cart)</span>
+    </h2>
+
+    <ul>
+      {% if cart.item_count > 0 %}
+        {% for item in cart.items %}
+          <li>
+            <section class="row">
+              <a class="remove icon-cross hidden-xs" data-remove data-variant-id="{{ item.variant.id }}"></a>
+              <img src="{{ item.product.featured_image | product_img_url: 'medium' }}" alt="{{ item.product.featured_image.alt | escape }}" class="col-xs-3" />
+              <div class="col-xs-9 detail">
+                <a href="{{ item.url }}">{{ item.title }}</a>
+                <div class="info">{{ item.quantity }} X {{ item.price | money }}</div>
+              </div>
+            </section>
+          </li>
+        {% endfor %}
+      {% else %}
+        <li>
+          There are no items in your cart.
+        </li>
+      {% endif %}
+    </ul>
+
+    <div class="total">
+      Total
+      <span>{{ cart.total_price | money }}</span>
+    </div>
+    </section>
+
+    <div class="checkout">
+      <a href="/cart" class="button clr2">Edit cart</a>
+      <a href="/checkout" class="button clr1">Checkout</a>
+    </div>
+  </div>
+</section>
+
+{% raw %}
+<section id="shopping-cart">
+  <div>
+    <script id="cart-template" type="text/x-handlebars-template">
+    <h2>
+      Shopping cart
+      <span>({{ item_count }} {{pluralize item_count}} in cart)</span>
+    </h2>
+
+    <ul class="mm-list">
+        {{#each items}}
+          <li>
+            <section class="row">
+              <a class="remove icon-cross" data-remove data-variant-id="{{ variant_id }}"></a>
+              <img src="{{ image }}" class="col-xs-3" />
+              <div class="col-xs-9 detail">
+                <a href="{{ url }}">{{ title }}</a>
+                <div class="info">{{ quantity }} X {{money price }}</div>
+              </div>
+            </section>
+          </li>
+        {{/each}}
+      {{empty item_count}}
+    </ul>
+
+    <div class="total">
+      Total
+      <span>{{money total_price }}</span>
+    </div>
+    </script>
+  </div>
+</section>
+{% endraw %}

@@ -1,0 +1,109 @@
+var array, cols, getMinimum, grid, maxOfArray, options, reset, updateHeight;
+
+cols = 0;
+
+array = [];
+
+options = {
+  width: 30,
+  offsetX: 5,
+  offsetY: 10,
+  container: '.grid',
+  pins: '.pin',
+  marginTop: 0
+};
+
+reset = function(col, opt) {
+  var i, _i, _ref, _results;
+  if (col && opt) {
+    $.extend(options, opt);
+    cols = col;
+  } else {
+    if ($(window).width() <= 400) {
+      $.extend(options, {
+        width: 100,
+        offsetX: 0
+      });
+      cols = 1;
+    } else if ($(window).width() > 400 && $(window).width() <= 768) {
+      $.extend(options, {
+        width: 45,
+        offsetX: 10
+      });
+      cols = 2;
+    } else if ($(window).width() > 768 && $(window).width() <= 992) {
+      $.extend(options, {
+        width: 30,
+        offsetX: 5
+      });
+      cols = 3;
+    } else {
+      $.extend(options, {
+        width: 22,
+        offsetX: 4
+      });
+      cols = 4;
+    }
+  }
+  array = [];
+  _results = [];
+  for (i = _i = 0, _ref = cols - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+    _results.push(array[i] = options.marginTop);
+  }
+  return _results;
+};
+
+getMinimum = function() {
+  var i, min, _i, _ref;
+  min = 0;
+  for (i = _i = 0, _ref = array.length; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+    if (array[min] > array[i]) {
+      min = i;
+    }
+  }
+  return min;
+};
+
+updateHeight = function(min, height) {
+  return array[min] += height;
+};
+
+maxOfArray = function() {
+  return Math.max.apply(Math, array);
+};
+
+grid = {
+  setBlocks: function(col, opt) {
+    reset(col, opt);
+    $('.loader').hide();
+    return $(options.pins).each(function() {
+      var height, min, _left, _top;
+      min = getMinimum();
+      _left = min * (options.width + options.offsetX);
+      _top = array[min];
+      $(this).css({
+        width: "" + options.width + "%",
+        left: "" + _left + "%",
+        top: _top,
+        visibility: 'visible'
+      });
+      height = $(this).outerHeight(true) + options.offsetY;
+      updateHeight(min, height);
+      return $(options.container).css({
+        height: maxOfArray() - options.offsetY
+      });
+    });
+  }
+};
+
+$(window).load(function() {
+  
+  grid.setBlocks();
+  
+ 
+  
+});
+
+$(window).resize(function() {
+  return grid.setBlocks();
+});
