@@ -123,7 +123,7 @@
 
 {% include 'product-modal' %}
 
-  <nav role='navigation' id="nav-menu" style="opacity: 0; visibility: hidden;">
+  <nav role="navigation" id="nav-menu" style="opacity: 0; visibility: hidden;">
   <div>
     <ul class="list">
       {% for link in linklists[settings.main_linklist].links %}
@@ -180,13 +180,15 @@
 
   <div class="container">
 
-  <div class="visible-xs top row">
-    <div class="nav-menu col-xs-6">
-        <a href="#nav-menu">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-        </a>
+  <div class="nav-menu padding_small visible-xs row">
+    <div class="col-xs-6">
+        <div>
+            <a href="#nav-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </a>
+        </div>
     </div>
     <div class="col-xs-6 right"><a href="#shopping-cart"><span class="icon-cart fs15"></span> Cart (<span class="item-count">{{ cart.item_count }}</span>)</a></div>
   </div>

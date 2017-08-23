@@ -14,21 +14,19 @@ h4 { font-size:2rem !important; text-transform:uppercase !important; }
     .shop-now { display:none; }
 }
 
-.menu {
-    .reset { display:flex !important; align-items:center; justify-content:center; }
-}
-
-.nav-menu {
-    .bar { width:4rem; height:.5rem; background-color:$teal; margin-bottom:.75rem; border-radius:30rem; }
-}
-
 a:hover { text-decoration:none !important; }
 
 .container { width:100% !important; }
 
 .newsletter-form { display:flex; align-items:center; justify-content:center; }
 
+.padding {
+    &_small { padding:1rem; }
+    &_medium { padding:2rem; }
+    &_large { padding:4rem; }
+}
 
+.shopify-preview-bar { display:none; }
 
 @media (min-width: 700px) {
     .pin .image { position:relative;
@@ -41,4 +39,30 @@ a:hover { text-decoration:none !important; }
         }
     }
 }
+
+.menu {
+    .reset { display:flex !important; align-items:center; justify-content:center; }
+}
+
+.nav-menu {
+    .bar { width:4rem; height:.5rem; background-color:$teal; margin-bottom:.75rem; border-radius:30rem; }
+}
+
+.mm-menu > .mm-panel { background-color:$teal; }
+
+#nav-menu ul li { margin-bottom:1rem;
+    &:after { border:none; }
+    a { font-size:3rem; text-transform:uppercase; }
+    .mm-subopen {
+        &:before { border:none; }
+    }
+}
+
+.mm-list a.mm-subopen { width:10rem;
+    + a { margin-right:10rem; }
+    &:after { content:''; width:1.5rem; height:1.5rem; }
+    &:before { display:block; content:'More'; font-size:1.75rem; height:1.75rem; position:absolute; right:2rem; margin-top:.7rem; }
+}
+
+.mm-list a.mm-subclose:before { content:''; width:1.5rem; height:1.5rem; }
 

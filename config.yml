@@ -27,8 +27,14 @@ development:
     - ./config.codekit
 
 production:
-  password:
-  theme_id: "live"
-  store: your-shop.myshopify.com
+  password: 04487256d842a6f15e7b93384becbd5a
+  theme_id: "8576440"
+  store: airplantman.myshopify.com
   ignore_files:
     - settings_data.json # Uncomment this line to avoid resetting theme settings
+    - src/assets/min/*
+    - src/assets/.sass-cache
+    - src/styles/*
+    - todo.org
+    - ./README.md
+    - ./config.codekit
