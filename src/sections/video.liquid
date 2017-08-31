@@ -1,0 +1,55 @@
+<div class="row align-center expanded">
+{% for block in section.blocks %}
+{% case block.type %}
+{% when 'body_banner' %}
+{% include 'body_banner' %}
+{% when 'video' %}
+{% include 'video_block' %}
+{% endcase %}
+{% endfor %}
+</div>
+
+{% schema %}
+{
+    "name": "How To Page Content",
+    "blocks": [
+        {
+            "type": "body_banner",
+            "name": "Title Banner",
+            "settings": [
+                {
+                    "id": "body_title",
+                    "type": "text",
+                    "label": "Banner Title"
+                },
+                {
+                    "id": "body_bg",
+                    "type": "image_picker",
+                    "label": "Banner Background Image"
+                },
+                {
+                    "id": "body_desc",
+                    "type": "textarea",
+                    "label": "A Short Blurb (Optional)"
+                }
+            ]
+        },
+        {
+            "type": "video",
+            "name": "Video Embed",
+            "settings": [
+                {
+                    "id": "video_title",
+                    "type": "text",
+                    "label": "Video Title"
+                },
+                {
+                    "id": "video_embed",
+                    "type": "textarea",
+                    "label": "Video Embed Code"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

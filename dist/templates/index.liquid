@@ -64,7 +64,7 @@
 
 <div class="content-heading">
   <h4 class="p0 m0">{% unless settings.fp-coll-heading == blank %} {{settings.fp-coll-heading}} {% else %} {{ collections[settings.frontpage-collection].title }} {% endunless %}</h4>
-  
+
   {% unless settings.fp-coll-sub-heading == blank %}
     <p class="p0 m0">
       {{settings.fp-coll-sub-heading}}
@@ -81,10 +81,10 @@
 
 {% endif %}
 
-{% if settings.display-featured-blog %} 
+{% if settings.display-featured-blog %}
 <div class="content-heading">
     <h4 class="p0 m0">{% unless settings.fp-blog-heading == blank %} {{settings.fp-blog-heading}} {% else %} From our blog {% endunless %}</h4>
-    
+
     {% unless settings.fp-blog-sub-heading == blank %}
   <p class="p0 m0">
         {{ settings.fp-blog-sub-heading }}
@@ -112,7 +112,7 @@
 {% endif %}
 {% endif %}
 
-<div class="row">
+<!-- <div class="row">
   {% if settings.display-welcome-message %}
   <div class="col-xs-12 {% if settings.display-timeline %}col-sm-6{% endif %}">
     <div class="content-heading">
@@ -120,7 +120,7 @@
     </div>
 
     {{ settings.welcome-content }}
-  </div>
+  </div> -->
 
   <div class="hidden-xs col-sm-5 col-sm-offset-1">
   {% else %}
@@ -130,8 +130,8 @@
     <div class="content-heading">
       <h4 class="p0 m0">Tweets</h4>
     </div>
-	
-      
+
+
     <div class="intrinsic-wrap">
       {% unless settings.twitter-username == blank %}
         {% assign twitter-username = settings.twitter-username %}
@@ -142,7 +142,7 @@
       <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/{{ twitter-username }}" data-screen-name="{{ twitter-username }}" data-widget-id="408124053057048576" data-chrome="noborder noheader nofooter transparent">Tweets by @{{ twitter-username }}</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
     </div>
-      
+
     {% endif %}
 
   </div>
@@ -154,7 +154,7 @@
     {
       var flex = $('.featured-flex').flexslider({
         prevText: "",
-        nextText: "",  
+        nextText: "",
         directionNav: false,
         animation: "slide"
       });
@@ -163,7 +163,7 @@
     {
     var flex = $('.featured-flex').flexslider({
         prevText: "",
-        nextText: "",  
+        nextText: "",
         directionNav: true,
       	slideshow: true
       });

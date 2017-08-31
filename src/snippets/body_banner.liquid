@@ -1,0 +1,8 @@
+<section id="body-banner" class="columns small-12 text-center cover content-margin-large" style="background-image:url('{{ block.settings.body_bg | img_url: '1024x' }}');">
+    <div class="body-title">
+        <div class="padding_medium">
+            <h1 class="text-color_white">{{ block.settings.body_title }}</h1>
+            {% if block.settings.body_desc != '' %}<p class="text-color_white">{{ block.settings.body_desc }}</p>{% endif %}
+        </div>
+    </div>
+</section>

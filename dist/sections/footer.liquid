@@ -1,13 +1,15 @@
+<div id="evm-instagram-feed"></div><script src="https://expertvillagemedia.com/instagramfeed/embed.js" data-shop-id="airplantman.myshopify.com"></script>
+
 <footer>
-    <div class="row">
-      <div class="col-xs-12 col-sm-4 col-md-3">
+    <div class="row expanded collapse">
+      <div class="col-xs-12 col-sm-4">
         <ul>
           {% for link in linklists[settings.footer-linklist].links %}
             <li><a href="{{ link.url }}">{{ link.title }}</a></li>
           {% endfor %}
         </ul>
       </div>
-      <div class="col-xs-12 col-sm-4 col-md-3">
+      <div class="col-xs-12 col-sm-4 text-center">
         <h4>Follow Us</h4>
 
         <div class="icon-social">
@@ -21,39 +23,48 @@
           {% if settings.tumblr-url.size > 0 %}<a href="{{ settings.tumblr-url }}" class="tumblr"><img src="{{ 'tumblr-small.png' | asset_url }}" alt="Twitter" /></a>{% endif %}
         </div>
       </div>
+      <!-- Begin MailChimp Signup Form -->
+      <!-- <div id="mc_embed_signup">
 
+          <div id="mc_embed_signup_scroll">
+      	<h2>Subscribe to our mailing list</h2>
+      <div class="indicates-required"><span class="asterisk">*</span> indicates required</div>
+      <div class="mc-field-group">
+      	<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
+      </label>
+      	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+      </div>
+      	    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+          <!--
+          <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+          </div>
+      </form>
+      </div> -->
+
+      <!--End mc_embed_signup-->
       {% if settings.enable-newsletter %}
-      <div class="col-xs-12 col-sm-4 col-md-4 row">
+      <div class="col-xs-12 col-sm-4 row text-center">
         <h4>Newsletter</h4>
 
-        <form action="{{ settings.mailchimp-url }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate newsletter-form" target="_blank" novalidate>
-          <input type="email" value="" name="EMAIL" placeholder="Enter your email">
-          <button type="submit" id="sign_up" name="subscribe" class="button clr2">Subscribe</button>
+         <form action="//airplantman.us7.list-manage.com/subscribe/post?u=5bf300047f2063bb382194f02&amp;id=7750e202f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+             <div id="mce-responses" class="clear">
+           		<div class="response" id="mce-error-response" style="display:none"></div>
+           		<div class="response" id="mce-success-response" style="display:none"></div>
+           	</div>
+          <input type="email" value="" name="EMAIL" placeholder="Enter your email" class="content-margin-small">
+          <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_5bf300047f2063bb382194f02_7750e202f0" tabindex="-1" value=""></div>
+          <button type="submit" id="mce-EMAIL" name="subscribe" class="button clr2">Subscribe</button>
         </form>
       </div>
-
-      <div class="col-xs-12 col-sm-12 col-md-2">
-
-      {% else %}
-        <div class="col-xs-12 col-sm-4 col-md-6">
       {% endif %}
-
-        <h4>Back to top</h4>
-        <a href="" class="scrollup icon-arrow-up2 fs30"></a>
-      </div>
     </div>
   </div>
 </footer>
 
       <div class="container">
   <div class="end-footer row">
-    {% comment %}
-    <div class="col-lg-6 hidden-xs hidden-sm">
-      (Shortcuts) M &rarr; Menu / C &rarr; Cart / Esc &rarr; Close everything
-    </div>
-    {% endcomment %}
-    <div class="col-sm-12 col-lg-6 col-xs-12 end">
-      Website by <a href="http://planetx.in"  target="_blank">Planetx Technologies</a> | © {{ 'now' | date: "%Y" }} {{ shop.name }}
+    <div class="col-sm-12 col-lg-6 col-xs-12 end uppercase">
+      © {{ 'now' | date: "%Y" }} {{ shop.name }}
     </div>
   </div>
 

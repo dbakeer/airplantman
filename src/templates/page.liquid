@@ -1,13 +1,6 @@
-<ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li class="active">{{ page.title }}</li>
-</ol>
-
-<div class="collection-title">
-  <h2 class="p0 m0 center">
-    {{ page.title }}
-  </h2>
-</div>
+<section>
+  <h1 class="p0 m0 center">{{ page.title }}</h1>
+</section>
 
 <div class="rte m40">
   {{ page.content }}
@@ -17,7 +10,7 @@
   <div class="share">
     <div class="share-wrap">
       <a href="https://twitter.com/share" class="twitter-share-button" data-text="Read {{ page.title | escape }} from {{ shop.name | escape }}">Tweet</a>
-      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>      
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
     </div>
     <div class="share-wrap">
       <div id="fb-root"></div>

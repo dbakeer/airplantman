@@ -12,7 +12,7 @@
   {% endunless %}
 </ol> -->
 
-<div class="collection-title">
+<section class="collection-title">
   <!-- <h2 class="m0 p0">
     {{ collection.title }}
   </h2> -->
@@ -75,7 +75,7 @@
 {% unless collection.all_products_count > 0 %}
   <p class="center">Sorry, there are no products in this collection.</p>
 {% else %}
-  <ul class="grid">
+  <ul class="rte grid">
     <div class="loader center">{{ 'loading.GIF' | asset_url | img_tag }}</div>
 
     {% for product in collection.products %}

@@ -5,7 +5,6 @@
     "@shopify/slate-tools": "0.3.3"
   },
   "dependencies": {
-    "foundation-sites": "^6.4.1",
     "gulp-cssimport": "^5.0.0"
   }
 }

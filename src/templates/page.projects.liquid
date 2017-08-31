@@ -1,0 +1,16 @@
+{% assign articles = blogs.custom-projects.articles | sort: 'title' %}
+<section id="project-container">
+    {% for article in articles %}
+    <div class="project-item hovermq">
+        <a class="full-link" href="{{ article.url }}">
+            <div class="grey-overlay">
+                <div class="text-center text-color_white">
+                    <h3 class="uppercase text-color_white"><b>{{ article.title }}</b></h3>
+                    <p class="uppercase">See More</p>
+                </div>
+            </div>
+            <img src="{{ article | img_url: 'master' }}">
+        </a>
+    </div>
+    {% endfor %}
+</section>
