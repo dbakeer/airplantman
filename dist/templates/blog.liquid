@@ -1,10 +1,28 @@
+{% if blog.handle == 'custom-projects' %}
+{% assign articles = blogs.custom-projects.articles | sort: 'title' %}
+<section id="project-container">
+    {% for article in blog.articles %}
+    <div class="project-item hovermq">
+        <a class="full-link" href="{{ article.url }}">
+            <div class="grey-overlay">
+                <div class="text-center text-color_white">
+                    <h3 class="uppercase text-color_white"><b>{{ article.title }}</b></h3>
+                    <p class="uppercase">See More</p>
+                </div>
+            </div>
+            <img src="{{ article | img_url: 'master' }}">
+        </a>
+    </div>
+    {% endfor %}
+</section>
+{% else %}
 {% paginate blog.articles by 8 %}
 
 <ol class="breadcrumb">
   <li><a href="/">Home</a></li>
   <li><a href="{{blog.url}}">{{ blog.title }}</a></li>
-  
-  {% unless paginate.pages == 0 %}      
+
+  {% unless paginate.pages == 0 %}
     <li class="active">Page {{ paginate.current_page }} of {{ paginate.pages }}</li>
   {% endunless %}
 </ol>
@@ -33,11 +51,11 @@
         <p>{{ article.content | strip_html | truncatewords: 100 }}</p>
       {% endif %}
     </div>
-    
+
     <a class="read-more button clr3" href="{{ article.url }}">Read more →</a>
 
     <section class="center">
-  
+
     <div class="author">
       {% if article.user.email.size > 0 %}
       <div class="avatar-wrap">
@@ -48,19 +66,19 @@
       {% endif %}
       <div>By {{ article.user.name }}</div>
     </div>
-      
+
     <div class="article-meta">
       <time pubdate datetime="{{ article.published_at | date: '%Y-%m-%d' }}"><h3 class="m0 p0">{{ article.published_at | date: '%b %d, %Y' }}</h3></time>
-      
+
       {% if blog.comments_enabled? %}
       <a href="{{ article.url }}#comments"><span class="icon-dot"></span>{{ article.comments_count }} {{ article.comments_count | pluralize: 'comment','comments' }}</a>
       {% endif %}
     </div>
-      
+
       <div class="share">
       <div class="share-wrap">
         <a href="https://twitter.com/share" class="twitter-share-button" data-text="Read {{ article.title | escape }} from {{ shop.name | escape }}">Tweet</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>      
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
       </div>
       <div class="share-wrap">
         <div id="fb-root"></div>
@@ -95,3 +113,4 @@
 {% include 'pagination' %}
 
 {% endpaginate %}
+{% endif %}

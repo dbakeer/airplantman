@@ -1446,9 +1446,11 @@ section {
   text-align: center; }
 
 .video-wrapper {
-  padding: 4rem 1rem; }
+  padding: 4rem 1rem;
+  text-align: center; }
   .video-wrapper iframe {
-    max-width: 100% !important; }
+    max-width: 100% !important;
+    margin-bottom: 2rem; }
 
 .uppercase {
   text-transform: uppercase; }
@@ -1500,12 +1502,18 @@ section {
   border: 1px solid red;
   /* !test */ }
 
-#evm-hover-li, #evm-hover-li {
-  height: 200px !important; }
-
-.evm_img_div img {
-  height: 200px !important;
-  width: 200px; }
+#evm-insta {
+  display: flex;
+  justify-content: center; }
+  #evm-insta #evm-instagram {
+    width: 100vw;
+    margin: 0 auto; }
+  @media screen and (min-width: 50em) {
+    #evm-insta {
+      width: 75vw;
+      margin: 0 auto; } }
+  #evm-insta #evm-hover-li img {
+    height: 100%; }
 
 #project-container {
   column-count: 1;
@@ -1519,11 +1527,11 @@ section {
       column-count: 3; } }
   @media screen and (min-width: 50em) {
     #project-container {
-      column-count: 3; } }
+      column-count: 4; } }
 
 .project-item {
   break-inside: avoid;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   position: relative;
   width: 100%;
   height: 100%; }
@@ -1538,7 +1546,8 @@ section {
     align-items: center;
     justify-content: center;
     top: 0;
-    left: 0; }
+    left: 0;
+    padding: 1rem; }
   .project-item.hovermq .grey-overlay {
     opacity: 0;
     transition: .3s opacity ease; }
@@ -1550,6 +1559,48 @@ section {
   display: block;
   width: 100%;
   height: 100%; }
+
+.newsletter-footer {
+  display: flex;
+  flex-direction: column; }
+
+.breadcrumb {
+  display: none; }
+
+#shopify-section-header {
+  margin-bottom: 4rem; }
+
+#accessories p, #accessories .p-desc {
+  display: none !important; }
+
+#accessories div {
+  margin-bottom: 1rem; }
+
+.video-small {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column; }
+
+.video-large {
+  display: none; }
+
+@media screen and (min-width: 47.9375em) {
+  .product {
+    display: flex; }
+  .video-small {
+    display: none; }
+  .video-large {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; } }
+
+.flex-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column; }
 
 @media (min-width: 700px) {
   .pin .image {
