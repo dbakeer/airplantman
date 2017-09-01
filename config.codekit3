@@ -159,6 +159,12 @@
 		"oT": 1,
 		"q": 100
 		},
+	"\/src\/assets\/favicon.ico": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/src\/assets\/favicon.ico",
+		"oF": 0
+		},
 	"\/src\/assets\/grabbing.png": {
 		"ft": 32768,
 		"iS": 116,

@@ -5,6 +5,8 @@ $content-margin:2rem;
 .content-margin { margin-bottom:$content-margin; }
 .content-margin-large { margin-bottom:$content-margin*2; }
 
+* { font-family:Arial !important; }
+
 h4 { font-size:2rem !important; text-transform:uppercase !important; }
 
 body { overflow-x:hidden; }
@@ -84,8 +86,9 @@ border: 1px solid red; /* !test */
 // .evm_img_div img { height:200px !important; width:200px; }
 
 #evm-insta { display:flex; justify-content:center;
-    #evm-instagram { width:100vw; margin:0 auto; }
-    @include breakpoint(800px) {  width:75vw; margin:0 auto; }
+    #evm-instagram { width:100vw; margin:0 auto;
+        @include breakpoint(800px) { width:75vw; margin:0 auto; }
+    }
     #evm-hover-li img { height:100%; }
 }
 

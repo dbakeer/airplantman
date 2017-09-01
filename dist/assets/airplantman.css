@@ -1388,6 +1388,9 @@
 .content-margin-large {
   margin-bottom: 4rem; }
 
+* {
+  font-family: Arial !important; }
+
 h4 {
   font-size: 2rem !important;
   text-transform: uppercase !important; }
@@ -1508,10 +1511,10 @@ section {
   #evm-insta #evm-instagram {
     width: 100vw;
     margin: 0 auto; }
-  @media screen and (min-width: 50em) {
-    #evm-insta {
-      width: 75vw;
-      margin: 0 auto; } }
+    @media screen and (min-width: 50em) {
+      #evm-insta #evm-instagram {
+        width: 75vw;
+        margin: 0 auto; } }
   #evm-insta #evm-hover-li img {
     height: 100%; }
 
